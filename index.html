@@ -8,119 +8,57 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body { font-family: 'Segoe UI', system-ui, sans-serif; }
-    .neon-text { 
-      text-shadow: 0 0 20px #22d3ee, 0 0 40px #22d3ee, 0 0 60px #a855f7;
-    }
-    .hero-bg { 
-      background: linear-gradient(135deg, #0a0a0a 0%, #1a0033 50%, #000000 100%);
-    }
-    .glow-cyan { box-shadow: 0 0 30px #22d3ee, 0 0 60px #22d3ee; }
-    .card { 
-      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .card:hover {
-      transform: translateY(-20px) scale(1.05);
-      box-shadow: 0 0 50px #22d3ee;
-    }
-    .neon-button {
-      transition: all 0.4s ease;
-    }
-    .neon-button:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 40px #22d3ee, 0 0 80px #a855f7;
-    }
+    .hero-bg { background: linear-gradient(to right, #0f172a, #1e2937); }
   </style>
 </head>
-<body class="bg-black text-white">
+<body class="bg-slate-950 text-white">
 
   <!-- NAV -->
-  <nav class="fixed top-0 w-full bg-black/95 backdrop-blur-xl border-b border-cyan-500/30 z-50">
+  <nav class="fixed top-0 w-full bg-black/95 backdrop-blur-md z-50 border-b border-slate-700">
     <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
-      <div class="flex items-center gap-4">
-        <img src="logo.png" alt="Eyesentrix AI" class="h-14 w-auto glow-cyan">
-        <span class="text-3xl font-bold tracking-tighter neon-text">EYESENTRIX AI</span>
+      <div class="flex items-center gap-3">
+        <img src="logo.png" alt="Eyesentrix AI" class="h-12 w-auto">
+        <span class="text-2xl font-semibold tracking-tight">EYESENTRIX AI</span>
       </div>
       <div class="flex gap-8 text-lg font-medium">
         <a href="#problem" class="hover:text-cyan-400 transition">Problem</a>
         <a href="#solution" class="hover:text-cyan-400 transition">Solution</a>
-        <a href="#usecases" class="hover:text-cyan-400 transition">Use Cases</a>
-        <a href="#team" class="hover:text-cyan-400 transition">Team</a>
-        <a href="#contact" class="hover:text-cyan-400 transition">Contact</a>
+        <a href="usecases.html" class="hover:text-cyan-400 transition">Use Cases</a>
+        <a href="team.html" class="hover:text-cyan-400 transition">Team</a>
+        <a href="contact.html" class="hover:text-cyan-400 transition">Contact</a>
       </div>
     </div>
   </nav>
 
-  <!-- HERO -->
-  <section class="hero-bg min-h-screen flex items-center pt-20 relative overflow-hidden">
-    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-      <div class="space-y-10">
-        <h1 class="text-6xl md:text-7xl font-bold leading-none neon-text">
+  <!-- HERO - Clean & Professional like your screenshot -->
+  <section class="hero-bg min-h-screen flex items-center pt-20">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+      
+      <!-- Left Side -->
+      <div class="space-y-8">
+        <h1 class="text-6xl md:text-7xl font-bold leading-tight">
           AI THAT<br>
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500">WATCHES</span><br>
+          WATCHES<br>
           UNDERSTANDS<br>
           <span class="text-cyan-400">PROTECTS</span>
         </h1>
-        <p class="text-2xl text-slate-300 max-w-lg">Real-time intelligence layered on your existing CCTV.<br>Built for Qatar & GCC.</p>
-        <a href="#contact" class="neon-button inline-block bg-gradient-to-r from-cyan-400 to-purple-600 text-black font-bold text-2xl px-12 py-6 rounded-2xl">
-          GET DEMO NOW →
+        <p class="text-2xl text-slate-300">
+          Real-time intelligence layered on your existing CCTV.<br>
+          Built for Qatar & GCC.
+        </p>
+        <a href="contact.html" 
+           class="inline-block bg-white text-black font-semibold text-xl px-10 py-5 rounded-xl hover:bg-cyan-400 transition">
+          Request a Demo →
         </a>
       </div>
+
+      <!-- Right Side - Big Eye -->
       <div>
-        <img src="logo.png" alt="Eyesentrix AI" class="w-full drop-shadow-[0_0_80px_#22d3ee]">
+        <img src="logo.png" alt="Eyesentrix AI" class="w-full rounded-2xl shadow-2xl">
       </div>
+
     </div>
   </section>
 
-  <!-- PROBLEM -->
-  <section id="problem" class="py-28 bg-slate-950">
-    <div class="max-w-6xl mx-auto px-6">
-      <h2 class="text-5xl font-bold text-center mb-20 neon-text">THE PROBLEM</h2>
-      <div class="grid md:grid-cols-3 gap-10">
-        <div class="card bg-slate-900 p-10 rounded-3xl border border-red-500/30">
-          <h3 class="text-3xl font-bold mb-6 text-red-400">Reactive Only</h3>
-          <p class="text-slate-400 text-lg">You only see what happened — never what’s happening right now.</p>
-        </div>
-        <div class="card bg-slate-900 p-10 rounded-3xl border border-red-500/30">
-          <h3 class="text-3xl font-bold mb-6 text-red-400">Human Fatigue</h3>
-          <p class="text-slate-400 text-lg">No human can watch 100+ cameras 24/7 without missing critical events.</p>
-        </div>
-        <div class="card bg-slate-900 p-10 rounded-3xl border border-red-500/30">
-          <h3 class="text-3xl font-bold mb-6 text-red-400">Wasted Infrastructure</h3>
-          <p class="text-slate-400 text-lg">Millions invested in cameras that give almost zero real value.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SOLUTION -->
-  <section id="solution" class="py-28">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-      <h2 class="text-5xl font-bold mb-8 neon-text">THE SOLUTION</h2>
-      <p class="text-2xl mb-16 text-slate-400">We turn your passive cameras into an active AI brain.</p>
-      <div class="grid md:grid-cols-3 gap-10">
-        <div class="card bg-gradient-to-br from-slate-900 to-black p-12 rounded-3xl border border-cyan-500/50">
-          <div class="text-7xl mb-6">📹</div>
-          <h3 class="text-3xl font-bold mb-4">Connect</h3>
-          <p class="text-slate-400">Works with your existing CCTV — no new hardware</p>
-        </div>
-        <div class="card bg-gradient-to-br from-slate-900 to-black p-12 rounded-3xl border border-cyan-500/50">
-          <div class="text-7xl mb-6">⚡</div>
-          <h3 class="text-3xl font-bold mb-4">Real-Time</h3>
-          <p class="text-slate-400">Instant alerts in under 5 seconds</p>
-        </div>
-        <div class="card bg-gradient-to-br from-slate-900 to-black p-12 rounded-3xl border border-cyan-500/50">
-          <div class="text-7xl mb-6">🧠</div>
-          <h3 class="text-3xl font-bold mb-4">Intelligent AI</h3>
-          <p class="text-slate-400">Detects threats, anomalies & opportunities</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- USE CASES, TEAM, CONTACT sections can be added similarly. Tell me if you want me to continue expanding this. -->
-
-  <footer class="bg-black py-16 text-center border-t border-cyan-900/30">
-    © 2026 Eyesentrix AI • Qatar & GCC
-  </footer>
 </body>
 </html>
