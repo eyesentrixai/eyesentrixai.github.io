@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Use Cases - Eyesentrix AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body { font-family: 'Segoe UI', system-ui, sans-serif; }
+    .neon-text { text-shadow: 0 0 20px #22d3ee, 0 0 40px #22d3ee, 0 0 60px #a855f7; }
+    .hero-bg { background: linear-gradient(135deg, #0a0a0a 0%, #1a0033 100%); }
+    .card {
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card:hover {
+      transform: translateY(-20px) scale(1.05);
+      box-shadow: 0 0 60px #22d3ee;
+    }
+  </style>
+</head>
+<body class="bg-black text-white">
+
+  <!-- NAV -->
+  <nav class="fixed top-0 w-full bg-black/95 backdrop-blur-xl border-b border-cyan-500/30 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+      <div class="flex items-center gap-4">
+        <img src="logo.png" alt="Eyesentrix AI" class="h-12 w-auto">
+        <span class="text-3xl font-bold tracking-tighter neon-text">EYESENTRIX AI</span>
+      </div>
+      <div class="flex gap-8 text-lg">
+        <a href="index.html" class="hover:text-cyan-400">Home</a>
+        <a href="solutions.html" class="hover:text-cyan-400">Solutions</a>
+        <a href="usecases.html" class="text-cyan-400">Use Cases</a>
+        <a href="team.html" class="hover:text-cyan-400">Team</a>
+        <a href="contact.html" class="hover:text-cyan-400">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero-bg min-h-screen pt-24">
+    <div class="max-w-6xl mx-auto px-6">
+      <h1 class="text-6xl md:text-7xl font-bold text-center neon-text mb-20">INDUSTRY USE CASES</h1>
+
+      <div class="grid md:grid-cols-2 gap-10">
+
+        <!-- Retail -->
+        <div class="card bg-slate-900 p-10 rounded-3xl border border-cyan-500/40">
+          <h2 class="text-4xl font-bold mb-6 text-cyan-400">🏬 Retail & Supermarkets</h2>
+          <ul class="space-y-4 text-lg text-slate-300">
+            <li>🔴 Shoplifting Prevention</li>
+            <li>🔴 Queue Management & Staff Alerts</li>
+            <li>🔴 Staff Compliance Monitoring</li>
+            <li>🔴 Stock & Shelf Visibility</li>
+          </ul>
+        </div>
+
+        <!-- Construction -->
+        <div class="card bg-slate-900 p-10 rounded-3xl border border-cyan-500/40">
+          <h2 class="text-4xl font-bold mb-6 text-cyan-400">🏗️ Construction & Industrial</h2>
+          <ul class="space-y-4 text-lg text-slate-300">
+            <li>🔴 Safety Violation Detection (PPE)</li>
+            <li>🔴 Equipment Theft Prevention</li>
+            <li>🔴 Hazard & Fire Risk Alerts</li>
+            <li>🔴 Unauthorized Access</li>
+          </ul>
+        </div>
+
+        <!-- Residential & Healthcare -->
+        <div class="card bg-slate-900 p-10 rounded-3xl border border-cyan-500/40">
+          <h2 class="text-4xl font-bold mb-6 text-cyan-400">🏠 Residential & Hospitals</h2>
+          <ul class="space-y-4 text-lg text-slate-300">
+            <li>🔴 Perimeter Intrusion</li>
+            <li>🔴 Patient Safety Monitoring</li>
+            <li>🔴 Restricted Area Access Control</li>
+            <li>🔴 Fall Detection</li>
+          </ul>
+        </div>
+
+        <!-- Hospitality -->
+        <div class="card bg-slate-900 p-10 rounded-3xl border border-cyan-500/40">
+          <h2 class="text-4xl font-bold mb-6 text-cyan-400">🏨 Hotels & Amusement Parks</h2>
+          <ul class="space-y-4 text-lg text-slate-300">
+            <li>🔴 Guest Safety Monitoring</li>
+            <li>🔴 Crowd Density & Queue Management</li>
+            <li>🔴 Lost Child Detection</li>
+            <li>🔴 Operational Efficiency</li>
+          </ul>
+        </div>
+
+        <!-- Education -->
+        <div class="card bg-slate-900 p-10 rounded-3xl border border-cyan-500/40 col-span-2 md:col-span-1">
+          <h2 class="text-4xl font-bold mb-6 text-cyan-400">🏫 Schools & Kids Areas</h2>
+          <ul class="space-y-4 text-lg text-slate-300">
+            <li>🔴 Bullying & Conflict Detection</li>
+            <li>🔴 Unauthorized Visitor Alerts</li>
+            <li>🔴 Child Safety & Boundary Breach</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="text-center mt-20">
+        <a href="contact.html" class="inline-block bg-gradient-to-r from-cyan-400 to-purple-600 text-black font-bold text-2xl px-16 py-7 rounded-2xl hover:scale-110 transition">
+          See How It Works For Your Industry →
+        </a>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
