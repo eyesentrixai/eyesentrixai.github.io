@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solutions - Eyesentrix AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body { font-family: 'Segoe UI', system-ui, sans-serif; }
+    .neon-text { text-shadow: 0 0 20px #22d3ee, 0 0 40px #22d3ee, 0 0 60px #a855f7; }
+    .hero-bg { background: linear-gradient(135deg, #0a0a0a 0%, #1a0033 100%); }
+    .card:hover { transform: translateY(-20px) scale(1.05); box-shadow: 0 0 50px #22d3ee; }
+  </style>
+</head>
+<body class="bg-black text-white">
+
+  <!-- NAV -->
+  <nav class="fixed top-0 w-full bg-black/95 backdrop-blur-xl border-b border-cyan-500/30 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+      <div class="flex items-center gap-4">
+        <img src="logo.png" alt="Eyesentrix AI" class="h-12 w-auto">
+        <span class="text-3xl font-bold tracking-tighter neon-text">EYESENTRIX AI</span>
+      </div>
+      <div class="flex gap-8 text-lg">
+        <a href="index.html" class="hover:text-cyan-400">Home</a>
+        <a href="solutions.html" class="text-cyan-400">Solutions</a>
+        <a href="usecases.html" class="hover:text-cyan-400">Use Cases</a>
+        <a href="team.html" class="hover:text-cyan-400">Team</a>
+        <a href="contact.html" class="hover:text-cyan-400">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero-bg min-h-screen pt-24 flex items-center">
+    <div class="max-w-6xl mx-auto px-6">
+      <h1 class="text-6xl md:text-7xl font-bold text-center neon-text mb-20">OUR SOLUTIONS</h1>
+      <div class="grid md:grid-cols-2 gap-10">
+        <div class="card bg-slate-900 p-12 rounded-3xl border border-cyan-500/50">
+          <h2 class="text-4xl font-bold mb-6">Real-Time Threat Detection</h2>
+          <p class="text-slate-300 text-lg">Shoplifting, intrusion, PPE violation, unauthorized access — detected instantly.</p>
+        </div>
+        <div class="card bg-slate-900 p-12 rounded-3xl border border-cyan-500/50">
+          <h2 class="text-4xl font-bold mb-6">Operational Intelligence</h2>
+          <p class="text-slate-300 text-lg">Queue monitoring, crowd density, staff compliance, stock visibility.</p>
+        </div>
+      </div>
+      <div class="text-center mt-16">
+        <a href="contact.html" class="inline-block bg-gradient-to-r from-cyan-400 to-purple-600 text-black font-bold text-2xl px-16 py-7 rounded-2xl hover:scale-110 transition">
+          Deploy Now in Qatar →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-black py-10 text-center border-t border-cyan-900">
+    © 2026 Eyesentrix AI • Qatar & GCC
+  </footer>
+</body>
+</html>
