@@ -8,61 +8,65 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body { font-family: 'Segoe UI', system-ui, sans-serif; }
-    .hero-bg { background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%); }
-    .section-title { font-size: 2.5rem; }
+    .hero-bg { 
+      background: linear-gradient(135deg, #0a0f1c 0%, #1a2338 100%);
+    }
+    .card-hover:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    }
   </style>
 </head>
 <body class="bg-slate-950 text-white">
 
-  <!-- NAVBAR -->
-  <nav class="bg-slate-900 sticky top-0 z-50 shadow-lg">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+  <!-- NAV -->
+  <nav class="bg-black/90 backdrop-blur-md sticky top-0 z-50 border-b border-cyan-900">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
       <div class="flex items-center gap-4">
         <img src="logo.png" alt="Eyesentrix AI" class="h-12 w-auto">
-        <span class="text-2xl font-bold">Eyesentrix AI</span>
+        <span class="text-3xl font-bold tracking-tighter text-white">Eyesentrix AI</span>
       </div>
-      <a href="#contact" class="bg-cyan-500 hover:bg-cyan-400 text-black px-8 py-3 rounded-2xl font-semibold">
-        Get Demo
+      <a href="#contact" class="bg-cyan-500 hover:bg-cyan-400 text-black font-semibold px-8 py-4 rounded-2xl transition-all">
+        Get Demo in Qatar
       </a>
     </div>
   </nav>
 
   <!-- HERO -->
-  <section class="hero-bg py-28">
-    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-      <div>
-        <h1 class="text-5xl md:text-7xl font-bold leading-tight mb-6">
-          Turn Existing CCTV into<br><span class="text-cyan-400">Real-Time Intelligence</span>
+  <section class="hero-bg py-32 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+      <div class="space-y-8">
+        <h1 class="text-6xl md:text-7xl font-bold leading-none">
+          Turn Your CCTV into<br>
+          <span class="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Real-Time AI Intelligence</span>
         </h1>
-        <p class="text-3xl mb-8 text-slate-300">AI That Watches, Understands, and Protects</p>
-        <p class="text-xl mb-10">Built for Qatar & GCC • Retail • Construction • Residential • Healthcare • Hospitality • Education</p>
-        <a href="#contact" class="bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-10 py-5 rounded-2xl text-xl inline-block">
-          Request a Demo in Qatar →
+        <p class="text-2xl text-slate-300">AI that watches, understands, and protects — built for Qatar & GCC.</p>
+        <a href="#contact" class="inline-block bg-white text-black font-bold text-xl px-10 py-5 rounded-2xl hover:bg-cyan-400 transition-all">
+          Request Free Demo →
         </a>
       </div>
-      <div class="rounded-3xl overflow-hidden shadow-2xl bg-slate-800 p-4">
-        <img src="https://picsum.photos/id/1015/800/600" alt="Eyesentrix AI" class="w-full rounded-2xl">
+      <div class="relative">
+        <img src="https://picsum.photos/id/1015/800/600" alt="Eyesentrix AI" class="rounded-3xl shadow-2xl border border-cyan-900">
       </div>
     </div>
   </section>
 
   <!-- PROBLEM -->
-  <section id="problem" class="py-24 bg-slate-900">
+  <section class="py-24 bg-slate-900">
     <div class="max-w-6xl mx-auto px-6">
-      <h2 class="section-title font-bold text-center mb-16">The Problem</h2>
-      <p class="text-2xl text-center mb-12">Cameras Are Everywhere. Real Intelligence Is Missing.</p>
+      <h2 class="text-5xl font-bold text-center mb-20">The Problem</h2>
       <div class="grid md:grid-cols-3 gap-8">
-        <div class="bg-slate-800 p-10 rounded-3xl">
-          <h3 class="text-2xl font-semibold mb-4">Reactive, Not Proactive</h3>
-          <p class="text-slate-400">Footage is reviewed only after incidents happen.</p>
+        <div class="bg-slate-800 p-10 rounded-3xl card-hover transition-all">
+          <h3 class="text-2xl font-bold mb-4">Too Reactive</h3>
+          <p class="text-slate-400">Incidents happen before anyone sees the footage.</p>
         </div>
-        <div class="bg-slate-800 p-10 rounded-3xl">
-          <h3 class="text-2xl font-semibold mb-4">Human Monitoring Gaps</h3>
-          <p class="text-slate-400">Impossible to watch hundreds of cameras 24/7.</p>
+        <div class="bg-slate-800 p-10 rounded-3xl card-hover transition-all">
+          <h3 class="text-2xl font-bold mb-4">Human Limits</h3>
+          <p class="text-slate-400">One guard can't monitor 100+ cameras 24/7.</p>
         </div>
-        <div class="bg-slate-800 p-10 rounded-3xl">
-          <h3 class="text-2xl font-semibold mb-4">Wasted Investment</h3>
-          <p class="text-slate-400">Expensive CCTV systems with no real-time value.</p>
+        <div class="bg-slate-800 p-10 rounded-3xl card-hover transition-all">
+          <h3 class="text-2xl font-bold mb-4">Wasted Money</h3>
+          <p class="text-slate-400">Expensive cameras sitting there doing almost nothing useful.</p>
         </div>
       </div>
     </div>
@@ -71,12 +75,24 @@
   <!-- SOLUTION -->
   <section class="py-24">
     <div class="max-w-6xl mx-auto px-6 text-center">
-      <h2 class="section-title font-bold mb-8">Our Solution</h2>
-      <p class="text-2xl max-w-3xl mx-auto mb-16">Transform your existing cameras into a smart AI system — no new hardware needed.</p>
-      <div class="grid md:grid-cols-3 gap-12 text-center">
-        <div><span class="text-6xl block mb-4">📹</span><strong>Connect</strong><br>Existing Cameras</div>
-        <div><span class="text-6xl block mb-4">🛎️</span><strong>Real-Time Alerts</strong><br>Instant notifications</div>
-        <div><span class="text-6xl block mb-4">🧠</span><strong>AI Intelligence</strong><br>Cloud-powered</div>
+      <h2 class="text-5xl font-bold mb-6">The Eyesentrix AI Solution</h2>
+      <p class="text-2xl text-slate-400 mb-16">Intelligence layered on top of your existing cameras — deployed in days.</p>
+      <div class="grid md:grid-cols-3 gap-10">
+        <div class="bg-gradient-to-b from-slate-900 to-slate-950 p-10 rounded-3xl border border-cyan-900/50 card-hover">
+          <div class="text-6xl mb-6">📹</div>
+          <h3 class="text-2xl font-bold">Connect</h3>
+          <p class="mt-4 text-slate-400">Works with your current CCTV system</p>
+        </div>
+        <div class="bg-gradient-to-b from-slate-900 to-slate-950 p-10 rounded-3xl border border-cyan-900/50 card-hover">
+          <div class="text-6xl mb-6">⚡</div>
+          <h3 class="text-2xl font-bold">Real-Time Alerts</h3>
+          <p class="mt-4 text-slate-400">Instant notifications on phone & dashboard</p>
+        </div>
+        <div class="bg-gradient-to-b from-slate-900 to-slate-950 p-10 rounded-3xl border border-cyan-900/50 card-hover">
+          <div class="text-6xl mb-6">🧠</div>
+          <h3 class="text-2xl font-bold">Smart AI</h3>
+          <p class="mt-4 text-slate-400">Detects threats, anomalies & opportunities</p>
+        </div>
       </div>
     </div>
   </section>
@@ -84,7 +100,7 @@
   <!-- USE CASES -->
   <section class="py-24 bg-slate-900">
     <div class="max-w-6xl mx-auto px-6">
-      <h2 class="section-title font-bold text-center mb-16">Industry Use Cases</h2>
+      <h2 class="text-5xl font-bold text-center mb-16">Industry Use Cases</h2>
       <div class="space-y-16">
         <div><strong>Retail & Supermarkets</strong> — Shoplifting prevention, queue management, staff monitoring, stock visibility</div>
         <div><strong>Construction & Industrial Sites</strong> — Safety violation alerts, equipment theft prevention, hazard detection</div>
@@ -98,24 +114,24 @@
   <!-- TEAM -->
   <section class="py-24">
     <div class="max-w-6xl mx-auto px-6">
-      <h2 class="section-title font-bold text-center mb-16">Our Founding Team</h2>
+      <h2 class="text-5xl font-bold text-center mb-16">Our Founding Team</h2>
       <div class="grid md:grid-cols-3 gap-10">
 
-        <div class="bg-slate-900 rounded-3xl p-10 text-center">
+        <div class="bg-slate-900 rounded-3xl p-10 text-center card-hover">
           <div class="text-7xl mb-6">👔</div>
           <h3 class="text-3xl font-bold">Mohiuddin Qazi</h3>
           <p class="text-cyan-400">Co-Founder, Business & Finance</p>
           <p class="mt-6 text-slate-400">Strategy, finance, and regional expansion.</p>
         </div>
 
-        <div class="bg-slate-900 rounded-3xl p-10 text-center">
+        <div class="bg-slate-900 rounded-3xl p-10 text-center card-hover">
           <div class="text-7xl mb-6">📈</div>
           <h3 class="text-3xl font-bold">Mateen Shaikh</h3>
           <p class="text-cyan-400">Co-Founder, Sales & Marketing</p>
           <p class="mt-6 text-slate-400">Partnerships and go-to-market execution.</p>
         </div>
 
-        <div class="bg-slate-900 rounded-3xl p-10 text-center">
+        <div class="bg-slate-900 rounded-3xl p-10 text-center card-hover">
           <div class="text-7xl mb-6">🧠</div>
           <h3 class="text-3xl font-bold">Ayesha Qureshi</h3>
           <p class="text-cyan-400">Co-Founder, Technology & AI</p>
@@ -129,13 +145,13 @@
   <!-- CONTACT -->
   <section id="contact" class="py-24 bg-slate-900">
     <div class="max-w-4xl mx-auto px-6 text-center">
-      <h2 class="section-title font-bold mb-8">Ready to Make Your Cameras Intelligent?</h2>
-      <p class="text-2xl mb-12">Contact us today for a free demo in Qatar.</p>
+      <h2 class="text-5xl font-bold mb-8">Ready to Transform Your CCTV?</h2>
+      <p class="text-2xl mb-12 text-slate-300">Contact us today for a free demo in Qatar.</p>
       <div class="space-x-6">
-        <a href="mailto:mohiuddin.qazi@eyesentrix.com" class="bg-white text-black px-10 py-5 rounded-2xl text-xl font-semibold inline-block hover:bg-cyan-400">
+        <a href="mailto:mohiuddin.qazi@eyesentrix.com" class="bg-white text-black px-10 py-5 rounded-2xl text-xl font-semibold inline-block hover:bg-cyan-400 transition-all">
           Email Us
         </a>
-        <a href="tel:+97470948452" class="bg-cyan-600 px-10 py-5 rounded-2xl text-xl font-semibold inline-block">
+        <a href="tel:+97470948452" class="bg-cyan-600 px-10 py-5 rounded-2xl text-xl font-semibold inline-block hover:bg-cyan-500 transition-all">
           Call +974 7094 8452
         </a>
       </div>
@@ -143,8 +159,8 @@
     </div>
   </section>
 
-  <footer class="bg-black py-12 text-center text-slate-500">
-    © 2026 Eyesentrix AI • Qatar & GCC
+  <footer class="bg-black py-16 text-center">
+    <p class="text-slate-500">© 2026 Eyesentrix AI • Made for Qatar & GCC</p>
   </footer>
 </body>
 </html>
