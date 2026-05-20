@@ -11,19 +11,15 @@
     :root {
       --bg: #04080f;
       --bg2: #070d1a;
-      --card: rgba(255,255,255,0.055);
-      --border: rgba(0,247,255,0.18);
-      --cyan: #00f7ff;
-      --cyan2: #00c4e0;
-      --blue: #1a72ff;
+      --card: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.08);
+      --cyan: #00d4ff;
       --text: #e8f4ff;
       --muted: #8ba4cc;
       --white: #ffffff;
-      --h1: clamp(3.8rem, 9vw, 6.8rem);
-      --h2: clamp(2.4rem, 6vw, 4.2rem);
-      --body: 0.97rem;
-      --small: 0.85rem;
-      --neon: 0 0 25px;
+      --h1: clamp(3.2rem, 8vw, 5.8rem);
+      --h2: clamp(2.1rem, 5.5vw, 3.8rem);
+      --body: 1.02rem;
     }
     html { scroll-behavior: smooth; }
     body {
@@ -32,40 +28,42 @@
       background: var(--bg);
       color: var(--text);
       overflow-x: hidden;
-      line-height: 1.68;
+      line-height: 1.7;
       position: relative;
     }
+    /* Subtle moving grid - very light */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
       background-image: 
-        linear-gradient(rgba(0,247,255,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,247,255,0.04) 1px, transparent 1px);
-      background-size: 80px 80px;
+        linear-gradient(rgba(0,212,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,0.025) 1px, transparent 1px);
+      background-size: 90px 90px;
       pointer-events: none;
       z-index: 0;
-      animation: gridShift 40s linear infinite;
-      opacity: 0.45;
+      animation: gridShift 60s linear infinite;
+      opacity: 0.3;
     }
-    @keyframes gridShift { 0% { background-position: 0 0; } 100% { background-position: 80px 80px; } }
+    @keyframes gridShift { 0% { background-position: 0 0; } 100% { background-position: 90px 90px; } }
+    /* Hero neural canvas - much softer */
     #hero-canvas {
       position: absolute;
       inset: 0;
       z-index: 1;
-      opacity: 0.85;
+      opacity: 0.25;
       pointer-events: none;
       mix-blend-mode: screen;
     }
     img { max-width: 100%; display: block; }
     .reveal {
       opacity: 0;
-      transform: translateY(40px) scale(0.96);
-      transition: all 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
     }
     .reveal.visible {
       opacity: 1;
-      transform: translateY(0) scale(1);
+      transform: translateY(0);
     }
     nav {
       position: fixed;
@@ -78,13 +76,13 @@
       justify-content: space-between;
       padding: 1rem 6%;
       background: rgba(4,8,15,0.92);
-      backdrop-filter: blur(28px);
+      backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
       transition: all 0.3s ease;
     }
-    nav.scrolled { padding: 0.75rem 6%; background: rgba(4,8,15,0.97); }
+    nav.scrolled { padding: 0.75rem 6%; }
     .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
-    .nav-logo img { width: 34px; height: 34px; filter: drop-shadow(0 0 12px var(--cyan)); }
+    .nav-logo img { width: 34px; height: 34px; }
     .nav-logo span { font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 800; letter-spacing: -0.03em; color: var(--white); }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a {
@@ -92,31 +90,18 @@
       text-decoration: none;
       font-size: 0.85rem;
       font-weight: 600;
-      transition: all 0.3s ease;
-      position: relative;
+      transition: color 0.3s ease;
     }
-    .nav-links a:after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: -2px;
-      left: 0;
-      background: var(--cyan);
-      box-shadow: var(--neon) var(--cyan);
-      transition: width 0.3s ease;
-    }
-    .nav-links a:hover:after { width: 100%; }
+    .nav-links a:hover { color: var(--cyan); }
     .nav-cta {
-      background: linear-gradient(90deg, var(--cyan), var(--cyan2));
+      background: var(--cyan);
       color: #04080f;
       padding: 0.55rem 1.4rem;
       border-radius: 9999px;
       font-weight: 700;
-      box-shadow: var(--neon) var(--cyan);
       transition: all 0.3s ease;
     }
-    .nav-cta:hover { transform: translateY(-2px) scale(1.05); box-shadow: 0 0 35px var(--cyan); }
+    .nav-cta:hover { transform: translateY(-2px); }
     .nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
     .nav-burger span {
       display: block;
@@ -124,7 +109,7 @@
       height: 2.5px;
       background: var(--text);
       border-radius: 2px;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.4s ease;
     }
     .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .nav-burger.open span:nth-child(2) { opacity: 0; }
@@ -136,7 +121,7 @@
       left: 0;
       right: 0;
       background: rgba(4,8,15,0.97);
-      backdrop-filter: blur(28px);
+      backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
       z-index: 199;
       flex-direction: column;
@@ -149,9 +134,7 @@
       font-weight: 600;
       padding: 1rem 0;
       border-bottom: 1px solid var(--border);
-      transition: color 0.3s ease;
     }
-    .nav-drawer a:hover { color: var(--cyan); }
     .hero {
       min-height: 100svh;
       display: flex;
@@ -167,7 +150,7 @@
       position: absolute;
       inset: 0;
       pointer-events: none;
-      background: radial-gradient(ellipse 80% 70% at 50% 25%, rgba(0,247,255,0.18) 0%, transparent 70%);
+      background: radial-gradient(ellipse 80% 70% at 50% 25%, rgba(0,212,255,0.09) 0%, transparent 70%);
     }
     .hero-content { position: relative; z-index: 3; max-width: 1100px; }
     h1 {
@@ -176,10 +159,7 @@
       font-weight: 800;
       line-height: 1.02;
       letter-spacing: -0.055em;
-      background: linear-gradient(92deg, #fff, var(--cyan));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: var(--neon) var(--cyan);
+      color: var(--white);
       margin-bottom: 1rem;
     }
     .hero-sub {
@@ -193,8 +173,8 @@
       display: inline-flex;
       align-items: center;
       gap: 0.6rem;
-      background: rgba(0,247,255,0.1);
-      border: 1px solid rgba(0,247,255,0.4);
+      background: rgba(0,212,255,0.08);
+      border: 1px solid rgba(0,212,255,0.25);
       padding: 0.4rem 1.1rem;
       border-radius: 9999px;
       font-size: 0.78rem;
@@ -203,17 +183,14 @@
       text-transform: uppercase;
       color: var(--cyan);
       margin-bottom: 1.8rem;
-      animation: badgePulse 2s ease infinite;
     }
-    @keyframes badgePulse { 50% { box-shadow: 0 0 25px var(--cyan); } }
     .hero-logo {
       width: clamp(88px, 14vw, 118px);
       height: clamp(88px, 14vw, 118px);
-      filter: drop-shadow(0 0 30px var(--cyan));
       margin-bottom: 1.8rem;
-      animation: logoFloat 4s ease-in-out infinite;
+      animation: logoFloat 6s ease-in-out infinite;
     }
-    @keyframes logoFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+    @keyframes logoFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
     .hero-actions {
       display: flex;
       gap: 1rem;
@@ -221,34 +198,16 @@
       flex-wrap: wrap;
     }
     .btn-primary {
-      background: linear-gradient(90deg, var(--cyan), var(--cyan2));
+      background: var(--cyan);
       color: #04080f;
       padding: 1rem 2.2rem;
       border-radius: 9999px;
       font-weight: 700;
       font-size: 1.05rem;
       text-decoration: none;
-      box-shadow: var(--neon) var(--cyan);
-      position: relative;
-      overflow: hidden;
-      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      transition: all 0.3s ease;
     }
-    .btn-primary:hover {
-      transform: translateY(-4px) scale(1.06);
-      box-shadow: 0 0 50px 10px var(--cyan);
-    }
-    .btn-primary::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 40%;
-      height: 300%;
-      background: linear-gradient(120deg, transparent, rgba(255,255,255,0.45), transparent);
-      animation: shimmer 3s linear infinite;
-      transform: skewX(-25deg);
-    }
-    @keyframes shimmer { 100% { transform: translateX(300%); } }
+    .btn-primary:hover { transform: translateY(-3px); }
     .btn-secondary {
       background: var(--card);
       color: var(--text);
@@ -256,12 +215,11 @@
       padding: 1rem 2rem;
       border-radius: 9999px;
       font-weight: 600;
-      transition: all 0.4s ease;
+      transition: all 0.3s ease;
     }
     .btn-secondary:hover {
       border-color: var(--cyan);
       color: var(--cyan);
-      box-shadow: var(--neon) var(--cyan);
     }
     .hero-stats {
       display: flex;
@@ -276,7 +234,6 @@
       font-weight: 800;
       color: var(--cyan);
       line-height: 1;
-      text-shadow: var(--neon) var(--cyan);
     }
     .trust-bar { margin-top: 3.5rem; display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; justify-content: center; }
     .trust-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.82rem; color: var(--muted); }
@@ -291,7 +248,7 @@
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--cyan);
-      background: rgba(0,247,255,0.08);
+      background: rgba(0,212,255,0.06);
       border: 1px solid var(--border);
       padding: 0.35rem 1rem;
       border-radius: 9999px;
@@ -302,28 +259,31 @@
       font-weight: 800;
       letter-spacing: -0.035em;
       line-height: 1.1;
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
     }
-    .section-lead { max-width: 580px; color: var(--muted); font-size: 1.05rem; margin-bottom: 2rem; }
+    .section-lead { max-width: 580px; color: var(--muted); font-size: 1.05rem; margin-bottom: 2.5rem; }
+    /* Clean loose list for all sections except Key Capabilities */
     .loose-list {
       list-style: none;
       font-size: 1.05rem;
-      line-height: 1.7;
+      line-height: 1.75;
       color: var(--muted);
     }
     .loose-list li {
-      margin-bottom: 1.1rem;
-      padding-left: 1.8rem;
+      margin-bottom: 1.4rem;
+      padding-left: 2rem;
       position: relative;
     }
     .loose-list li::before {
-      content: '◆';
+      content: '•';
       position: absolute;
       left: 0;
       color: var(--cyan);
-      font-size: 1.1rem;
+      font-size: 1.4rem;
+      line-height: 1;
     }
-    /* ONLY KEY CAPABILITIES uses cards */
+    .loose-list strong { color: var(--text); }
+    /* Only Key Capabilities uses clean cards */
     .key-capabilities-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -332,50 +292,36 @@
     .futuristic-card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 18px;
+      border-radius: 16px;
       padding: 2rem 1.6rem;
-      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-      position: relative;
-      overflow: hidden;
-    }
-    .futuristic-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(0,247,255,0.12), transparent);
-      opacity: 0;
-      transition: opacity 0.4s ease;
+      transition: all 0.4s ease;
     }
     .futuristic-card:hover {
-      transform: translateY(-10px) scale(1.04);
-      box-shadow: var(--neon) var(--cyan);
+      transform: translateY(-6px);
       border-color: var(--cyan);
     }
-    .futuristic-card:hover::before { opacity: 1; }
     .futuristic-card .step-num {
       font-family: 'Syne', sans-serif;
-      font-size: 3rem;
+      font-size: 2.8rem;
       font-weight: 800;
-      color: rgba(0,247,255,0.15);
-      line-height: 1;
-      margin-bottom: 0.8rem;
+      color: rgba(0,212,255,0.12);
+      margin-bottom: 0.6rem;
     }
-    .futuristic-card .step-icon { font-size: 2.4rem; margin-bottom: 1rem; }
+    .futuristic-card .step-icon { font-size: 2.2rem; margin-bottom: 1rem; }
     .futuristic-card .step-title {
       font-family: 'Syne', sans-serif;
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 700;
       margin-bottom: 0.6rem;
     }
     /* Responsive */
     @media (max-width: 900px) {
-      :root { --h1: clamp(2.8rem, 9vw, 4.8rem); --h2: clamp(2rem, 7vw, 3.2rem); }
       .nav-links { display: none; }
       .nav-burger { display: flex; }
     }
     @media (max-width: 600px) {
-      :root { --h1: clamp(2.4rem, 11vw, 3.8rem); --h2: clamp(1.7rem, 8vw, 2.8rem); --body: 0.92rem; }
       section { padding: 3rem 5%; }
+      .loose-list li { font-size: 1rem; }
     }
   </style>
 </head>
@@ -415,11 +361,10 @@
     <div class="hero-bg"></div>
     <div class="hero-content">
       <div class="hero-badge">
-        <span style="display:inline-block;width:6px;height:6px;background:var(--cyan);border-radius:50%;animation:ping 2s infinite;"></span>
         QATAR → GCC 2026
       </div>
       <img src="logo.png" alt="Eyesentrix AI" class="hero-logo" />
-      <h1>AI That <span style="color:#00f7ff;">Watches,</span><br>Understands &amp; Protects</h1>
+      <h1>AI That <span style="color:#00d4ff;">Watches,</span><br>Understands &amp; Protects</h1>
       <p class="hero-sub">AI-Powered Remote Monitoring &amp; Business Intelligence. Turn passive CCTV into real-time intelligence. Zero new hardware. Live in days.</p>
       <div class="hero-actions">
         <a href="#contact" class="btn-primary">Request Live Demo</a>
@@ -441,23 +386,23 @@
   </section>
 
   <!-- MARQUEE -->
-  <div class="marquee-section" style="background:rgba(0,247,255,0.04);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.25rem 0;overflow:hidden;">
-    <div class="marquee-track" style="display:flex;gap:2.8rem;width:max-content;animation:marquee 28s linear infinite;">
-      <div class="marquee-item" style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.3rem;">🛒</span> Shoplifting Detection</div>
-      <div class="marquee-item" style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.3rem;">⚡</span> Sub-5s Alerts</div>
-      <div class="marquee-item" style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.3rem;">📊</span> Real-Time Analytics</div>
-      <div class="marquee-item" style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.3rem;">🔒</span> Restricted Area Monitoring</div>
-      <div class="marquee-item" style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.3rem;">👥</span> Queue Management</div>
-      <div class="marquee-item" style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.3rem;">📦</span> Stock Visibility</div>
-      <div class="marquee-item" style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.3rem;">🤖</span> Agentic AI</div>
+  <div style="background:rgba(0,212,255,0.03);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.1rem 0;overflow:hidden;">
+    <div style="display:flex;gap:2.5rem;width:max-content;animation:marquee 32s linear infinite;">
+      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">🛒</span> Shoplifting Detection</div>
+      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">⚡</span> Sub-5s Alerts</div>
+      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">📊</span> Real-Time Analytics</div>
+      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">🔒</span> Restricted Area Monitoring</div>
+      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">👥</span> Queue Management</div>
+      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">📦</span> Stock Visibility</div>
+      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">🤖</span> Agentic AI</div>
       <!-- Duplicate -->
-      <div class="marquee-item" style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.3rem;">🛒</span> Shoplifting Detection</div>
-      <div class="marquee-item" style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.3rem;">⚡</span> Sub-5s Alerts</div>
-      <div class="marquee-item" style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.3rem;">📊</span> Real-Time Analytics</div>
-      <div class="marquee-item" style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.3rem;">🔒</span> Restricted Area Monitoring</div>
-      <div class="marquee-item" style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.3rem;">👥</span> Queue Management</div>
-      <div class="marquee-item" style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.3rem;">📦</span> Stock Visibility</div>
-      <div class="marquee-item" style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.3rem;">🤖</span> Agentic AI</div>
+      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">🛒</span> Shoplifting Detection</div>
+      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">⚡</span> Sub-5s Alerts</div>
+      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">📊</span> Real-Time Analytics</div>
+      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">🔒</span> Restricted Area Monitoring</div>
+      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">👥</span> Queue Management</div>
+      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">📦</span> Stock Visibility</div>
+      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">🤖</span> Agentic AI</div>
     </div>
   </div>
 
@@ -567,9 +512,9 @@
       <h2>Affordable, Scalable Pricing</h2>
       <p class="section-lead">SaaS + Managed Monitoring — deploy one or both. Scale from pilot to enterprise with zero friction and &lt;3 month ROI.</p>
       <ul class="loose-list">
-        <li><strong>SaaS Platform</strong> — QAR 90 / camera / month<br>AI detection engine, real-time alerts, analytics &amp; reporting.</li>
-        <li><strong>Managed Monitoring</strong> — QAR 2,000 / store / month<br>24/7 human verification, remote command center, incident management.</li>
-        <li><strong>Combined (10 Cameras)</strong> — QAR 2,900 / store / month<br>Full AI + Human coverage. High-margin recurring ARR. &lt;3 months ROI.</li>
+        <li><strong>SaaS Platform</strong> — QAR 90 / camera / month<br>AI detection engine, real-time alerts dashboard, analytics &amp; reporting.</li>
+        <li><strong>Managed Monitoring</strong> — QAR 2,000 / store / month<br>24/7 human verification, remote command center, incident management, dedicated response team.</li>
+        <li><strong>Combined (10 Cameras)</strong> — QAR 2,900 / store / month<br>Full AI + Human coverage. High-margin recurring ARR. &lt;3 months ROI payback. No capital expenditure.</li>
       </ul>
     </div>
   </section>
@@ -582,7 +527,7 @@
       <p class="section-lead">Starting in Qatar, then scaling across the entire GCC — one of the fastest-growing tech adoption corridors in the world.</p>
       <ul class="loose-list">
         <li><strong>Phase 1 (2026):</strong> Qatar — retail chains, hypermarkets, malls &amp; warehouses.</li>
-        <li><strong>Phase 2 (2027+):</strong> UAE, Saudi Arabia, Kuwait, Bahrain &amp; Oman via channel partners.</li>
+        <li><strong>Phase 2 (2027+):</strong> UAE, Saudi Arabia, Kuwait, Bahrain &amp; Oman via channel partners and direct enterprise sales.</li>
         <li>5,000+ Qatar retail &amp; warehouse sites</li>
         <li>25,000+ GCC potential sites by 2027</li>
         <li>100M+ cameras deployed across GCC</li>
@@ -598,12 +543,10 @@
       <h2>Strong Recurring Revenue Growth</h2>
       <p class="section-lead">Clear path to QAR 13M+ annual run-rate in 3 years with 72% gross margin.</p>
       <ul class="loose-list">
-        <li><strong>Year 1</strong> — 75 stores • QAR 2.6M annual revenue</li>
-        <li><strong>Year 2</strong> — 200 stores • QAR 6.96M annual revenue</li>
-        <li><strong>Year 3</strong> — 375 stores • QAR 13M+ annual revenue</li>
-        <li>72% Gross Margin</li>
-        <li>&lt;3 months payback period</li>
-        <li>High-margin recurring ARR from SaaS + managed services</li>
+        <li><strong>Year 1</strong> — 75 stores • QAR 218K/month • QAR 2.6M annual revenue</li>
+        <li><strong>Year 2</strong> — 200 stores • QAR 580K/month • QAR 6.96M annual revenue</li>
+        <li><strong>Year 3</strong> — 375 stores • QAR 1.09M/month • QAR 13M+ annual revenue</li>
+        <li>72% Gross Margin • &lt;3 months payback period • Pure recurring ARR</li>
       </ul>
     </div>
   </section>
@@ -640,7 +583,7 @@
     <div class="section-wrap" style="text-align:center;max-width:620px;margin:0 auto;">
       <div class="section-label" style="display:inline-block;">GET IN TOUCH</div>
       <h2>Ready to See It In Action?</h2>
-      <p style="color:var(--muted);font-size:1.05rem;margin-bottom:2rem;">Request a live demo, explore a pilot program, or discuss partnership opportunities.</p>
+      <p style="color:var(--muted);font-size:1.05rem;margin-bottom:2rem;">Request a live demo, explore a pilot program, or discuss partnership opportunities with the Eyesentrix team.</p>
       <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
         <a href="mailto:mohiuddin.qazi@eyesentrix.com" class="btn-primary">📧 Email Us</a>
         <a href="https://www.eyesentrix.io" target="_blank" class="btn-secondary">🌐 Visit eyesentrix.io</a>
@@ -659,7 +602,7 @@
   </footer>
 
   <script>
-    // Neural Network Canvas
+    // Subtle neural network canvas
     const canvas = document.getElementById('hero-canvas');
     const ctx = canvas.getContext('2d');
     let particles = [], width, height;
@@ -669,9 +612,9 @@
       constructor() {
         this.x = Math.random() * width;
         this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * 0.8;
-        this.vy = (Math.random() - 0.5) * 0.8;
-        this.radius = Math.random() * 2.8 + 1;
+        this.vx = (Math.random() - 0.5) * 0.6;
+        this.vy = (Math.random() - 0.5) * 0.6;
+        this.radius = Math.random() * 1.8 + 0.8;
       }
       update() {
         this.x += this.vx; this.y += this.vy;
@@ -679,21 +622,21 @@
         if (this.y < 0 || this.y > height) this.vy *= -1;
       }
       draw() {
-        ctx.fillStyle = '#00f7ff';
-        ctx.globalAlpha = 0.9;
+        ctx.fillStyle = '#00d4ff';
+        ctx.globalAlpha = 0.7;
         ctx.beginPath(); ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2); ctx.fill();
       }
     }
-    function initParticles() { particles = []; for (let i = 0; i < 140; i++) particles.push(new Particle()); }
+    function initParticles() { particles = []; for (let i = 0; i < 80; i++) particles.push(new Particle()); }
     function connect() {
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const distance = Math.sqrt(dx*dx + dy*dy);
-          if (distance < 130) {
-            ctx.strokeStyle = `rgba(0, 247, 255, ${1 - distance / 130})`;
-            ctx.lineWidth = 0.9;
+          if (distance < 110) {
+            ctx.strokeStyle = `rgba(0, 212, 255, ${0.15 * (1 - distance / 110)})`;
+            ctx.lineWidth = 0.7;
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
@@ -726,17 +669,17 @@
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
 
-    // Count-up
+    // Count-up animation
     function countUp(el) {
       const target = parseFloat(el.getAttribute('data-count'));
       let count = 0;
-      const increment = target / 80;
+      const increment = target / 70;
       const timer = setInterval(() => {
         count += increment;
         if (count >= target) { count = target; clearInterval(timer); }
         el.textContent = target % 1 === 0 ? Math.floor(count) : count.toFixed(0);
         if (target === 100000000) el.textContent = (count / 1000000).toFixed(0) + 'M+';
-      }, 18);
+      }, 20);
     }
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
