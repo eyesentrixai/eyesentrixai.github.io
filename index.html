@@ -3,697 +3,1056 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Eyesentrix AI — AI-Powered Remote Monitoring &amp; Business Intelligence. Transform existing CCTV into real-time intelligence. Pure SaaS. Live in days." />
-  <title>Eyesentrix AI — AI That Watches, Understands &amp; Protects</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&amp;family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&amp;display=swap" rel="stylesheet" />
+  <title>Eyesentrix AI — AI-Powered Remote Monitoring & Business Intelligence</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --bg: #04080f;
-      --bg2: #070d1a;
-      --card: rgba(255,255,255,0.04);
+      --bg:     #04080f;
+      --bg2:    #070d1a;
+      --card:   rgba(255,255,255,0.04);
       --border: rgba(255,255,255,0.08);
-      --cyan: #00d4ff;
-      --text: #e8f4ff;
-      --muted: #8ba4cc;
-      --white: #ffffff;
-      --h1: clamp(3.2rem, 8vw, 5.8rem);
-      --h2: clamp(2.1rem, 5.5vw, 3.8rem);
-      --body: 1.02rem;
+      --cyan:   #00d4ff;
+      --cyan2:  #0099cc;
+      --blue:   #1a4cff;
+      --text:   #e8f0ff;
+      --muted:  #7a8ba8;
+      --white:  #ffffff;
+      /* typography scale */
+      --h1: 2.6rem;
+      --h2: 1.9rem;
+      --body: 0.95rem;
+      --small: 0.82rem;
     }
+
     html { scroll-behavior: smooth; }
+
     body {
       font-family: 'DM Sans', sans-serif;
       font-size: var(--body);
       background: var(--bg);
       color: var(--text);
       overflow-x: hidden;
-      line-height: 1.7;
-      position: relative;
+      line-height: 1.65;
     }
-    /* Very subtle grid background */
+
+    /* subtle noise */
     body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: 
-        linear-gradient(rgba(0,212,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,212,255,0.025) 1px, transparent 1px);
-      background-size: 90px 90px;
-      pointer-events: none;
-      z-index: 0;
-      animation: gridShift 80s linear infinite;
-      opacity: 0.25;
+      content:''; position:fixed; inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events:none; z-index:0; opacity:0.35;
     }
-    @keyframes gridShift { 0% { background-position: 0 0; } 100% { background-position: 90px 90px; } }
-    /* Soft hero canvas - very light neural effect */
-    #hero-canvas {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      opacity: 0.18;
-      pointer-events: none;
-      mix-blend-mode: screen;
+
+    img { max-width:100%; display:block; }
+
+    /* ── Floating grid lines decoration ── */
+    .grid-lines {
+      position:absolute; inset:0; pointer-events:none; overflow:hidden; z-index:0;
     }
-    img { max-width: 100%; display: block; }
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+    .grid-lines::before,.grid-lines::after {
+      content:'';
+      position:absolute;
+      background:linear-gradient(transparent 0%,transparent calc(100% - 1px),rgba(0,212,255,0.06) 100%);
+      background-size:1px 80px;
+      top:0; bottom:0;
     }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .grid-lines::before { left:20%; width:1px; }
+    .grid-lines::after  { right:20%; width:1px; }
+
+    /* ── Scroll reveal ── */
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    /* ════════════════ NAV ════════════════ */
     nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 200;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 6%;
-      background: rgba(4,8,15,0.92);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-      transition: all 0.3s ease;
+      position:fixed; top:0; left:0; right:0; z-index:200;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0.9rem 6%;
+      background:rgba(4,8,15,0.88);
+      backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border);
     }
-    nav.scrolled { padding: 0.75rem 6%; }
-    .nav-logo { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
-    .nav-logo img { width: 34px; height: 34px; }
-    .nav-logo span { font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 800; letter-spacing: -0.03em; color: var(--white); }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 600;
-      transition: color 0.3s ease;
-    }
-    .nav-links a:hover { color: var(--cyan); }
+    .nav-logo { display:flex; align-items:center; gap:0.55rem; text-decoration:none; flex-shrink:0; }
+    .nav-logo img { width:30px; height:30px; object-fit:contain; }
+    .nav-logo span { font-family:'Syne',sans-serif; font-size:1.05rem; font-weight:700; color:var(--white); letter-spacing:-0.02em; }
+
+    .nav-links { display:flex; gap:1.6rem; list-style:none; }
+    .nav-links a { color:var(--muted); text-decoration:none; font-size:0.82rem; font-weight:500; transition:color 0.2s; white-space:nowrap; }
+    .nav-links a:hover { color:var(--cyan); }
     .nav-cta {
-      background: var(--cyan);
-      color: #04080f;
-      padding: 0.55rem 1.4rem;
-      border-radius: 9999px;
-      font-weight: 700;
-      transition: all 0.3s ease;
+      background:var(--cyan) !important; color:var(--bg) !important;
+      padding:0.4rem 1rem; border-radius:6px; font-weight:600 !important;
     }
-    .nav-cta:hover { transform: translateY(-2px); }
-    .nav-burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
-    .nav-burger span {
-      display: block;
-      width: 26px;
-      height: 2.5px;
-      background: var(--text);
-      border-radius: 2px;
-      transition: all 0.4s ease;
-    }
-    .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-burger.open span:nth-child(2) { opacity: 0; }
-    .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-cta:hover { background:var(--cyan2) !important; }
+
+    .nav-burger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; background:none; border:none; }
+    .nav-burger span { display:block; width:22px; height:2px; background:var(--text); border-radius:2px; transition:all 0.3s; }
+    .nav-burger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity:0; }
+    .nav-burger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+
     .nav-drawer {
-      display: none;
-      position: fixed;
-      top: 68px;
-      left: 0;
-      right: 0;
-      background: rgba(4,8,15,0.97);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-      z-index: 199;
-      flex-direction: column;
-      padding: 1.5rem 6%;
-      gap: 0.5rem;
+      display:none; position:fixed; top:57px; left:0; right:0;
+      background:rgba(4,8,15,0.97); backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--border); z-index:199;
+      flex-direction:column; padding:1rem 6% 1.25rem; gap:0;
     }
-    .nav-drawer.open { display: flex; }
-    .nav-drawer a {
-      color: var(--text);
-      font-weight: 600;
-      padding: 1rem 0;
-      border-bottom: 1px solid var(--border);
-    }
+    .nav-drawer.open { display:flex; }
+    .nav-drawer a { color:var(--text); text-decoration:none; font-size:0.95rem; font-weight:500; padding:0.6rem 0; border-bottom:1px solid var(--border); transition:color 0.2s; }
+    .nav-drawer a:last-child { border-bottom:none; }
+    .nav-drawer a:hover { color:var(--cyan); }
+    .nav-drawer .drawer-cta { margin-top:0.75rem; background:var(--cyan); color:var(--bg) !important; padding:0.7rem 1rem; border-radius:8px; font-weight:700; text-align:center; border-bottom:none !important; }
+
+    /* ════════════════ HERO ════════════════ */
     .hero {
-      min-height: 100svh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 8rem 6% 4rem;
-      position: relative;
-      overflow: hidden;
+      min-height:100svh; display:flex; flex-direction:column;
+      align-items:center; justify-content:center; text-align:center;
+      padding:7rem 6% 4rem; position:relative; overflow:hidden;
     }
     .hero-bg {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background: radial-gradient(ellipse 80% 70% at 50% 25%, rgba(0,212,255,0.09) 0%, transparent 70%);
+      position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 20%, rgba(0,212,255,0.12) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 50% at 10% 70%, rgba(26,76,255,0.09) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 50% at 90% 75%, rgba(0,100,200,0.07) 0%, transparent 55%);
     }
-    .hero-content { position: relative; z-index: 3; max-width: 1100px; }
-    h1 {
-      font-family: 'Syne', sans-serif;
-      font-size: var(--h1);
-      font-weight: 800;
-      line-height: 1.02;
-      letter-spacing: -0.055em;
-      color: var(--white);
-      margin-bottom: 1rem;
+    /* animated orbs */
+    .orb {
+      position:absolute; border-radius:50%; filter:blur(70px); pointer-events:none; opacity:0.18;
+      animation:drift 10s ease-in-out infinite alternate;
     }
-    .hero-sub {
-      font-size: 1.15rem;
-      color: var(--muted);
-      max-width: 560px;
-      margin: 0 auto 2.5rem;
-      line-height: 1.6;
+    .orb1 { width:380px; height:380px; background:var(--cyan); top:-80px; left:-60px; animation-duration:12s; }
+    .orb2 { width:300px; height:300px; background:var(--blue); bottom:-60px; right:-40px; animation-duration:9s; animation-delay:-4s; }
+    @keyframes drift { from{transform:translate(0,0) scale(1);} to{transform:translate(30px,20px) scale(1.07);} }
+
+    /* hero ring decoration */
+    .hero-ring {
+      position:absolute; width:600px; height:600px;
+      border:1px solid rgba(0,212,255,0.06); border-radius:50%;
+      top:50%; left:50%; transform:translate(-50%,-50%);
+      pointer-events:none;
+      animation:spin 40s linear infinite;
     }
+    .hero-ring::after {
+      content:''; position:absolute; width:400px; height:400px;
+      border:1px solid rgba(0,212,255,0.04); border-radius:50%;
+      top:50%; left:50%; transform:translate(-50%,-50%);
+    }
+    @keyframes spin { to { transform:translate(-50%,-50%) rotate(360deg); } }
+
     .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      background: rgba(0,212,255,0.08);
-      border: 1px solid rgba(0,212,255,0.25);
-      padding: 0.4rem 1.1rem;
-      border-radius: 9999px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--cyan);
-      margin-bottom: 1.8rem;
+      position:relative; z-index:1;
+      display:inline-flex; align-items:center; gap:0.45rem;
+      background:rgba(0,212,255,0.08); border:1px solid rgba(0,212,255,0.28);
+      padding:0.3rem 0.9rem; border-radius:100px;
+      font-size:0.7rem; font-weight:500; color:var(--cyan);
+      letter-spacing:0.07em; text-transform:uppercase;
+      margin-bottom:1.5rem;
+      animation:fadeUp 0.7s ease both;
     }
+    .hero-badge::before { content:''; width:5px; height:5px; background:var(--cyan); border-radius:50%; animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.3;transform:scale(0.7);} }
+
     .hero-logo {
-      width: clamp(88px, 14vw, 118px);
-      height: clamp(88px, 14vw, 118px);
-      margin-bottom: 1.8rem;
-      animation: logoFloat 6s ease-in-out infinite;
+      position:relative; z-index:1;
+      width:clamp(72px,12vw,100px); height:clamp(72px,12vw,100px);
+      object-fit:contain; margin-bottom:1.5rem;
+      animation:fadeUp 0.7s 0.1s ease both;
+      filter:drop-shadow(0 0 24px rgba(0,212,255,0.45));
     }
-    @keyframes logoFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+
+    h1 {
+      font-family:'Syne',sans-serif;
+      font-size:var(--h1);
+      font-weight:800; line-height:1.05; letter-spacing:-0.03em;
+      color:var(--white);
+      position:relative; z-index:1;
+      animation:fadeUp 0.7s 0.15s ease both;
+    }
+    h1 .accent { color:var(--cyan); }
+
+    .hero-sub {
+      font-size:0.95rem; color:var(--muted); font-weight:400;
+      max-width:480px; margin:1.1rem auto 2rem;
+      line-height:1.7; position:relative; z-index:1;
+      animation:fadeUp 0.7s 0.25s ease both;
+    }
+
     .hero-actions {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
+      display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap;
+      position:relative; z-index:1;
+      animation:fadeUp 0.7s 0.35s ease both;
     }
+
     .btn-primary {
-      background: var(--cyan);
-      color: #04080f;
-      padding: 1rem 2.2rem;
-      border-radius: 9999px;
-      font-weight: 700;
-      font-size: 1.05rem;
-      text-decoration: none;
-      transition: all 0.3s ease;
+      background:var(--cyan); color:var(--bg);
+      padding:0.75rem 1.6rem; border-radius:8px;
+      font-weight:700; font-size:0.875rem; text-decoration:none;
+      transition:all 0.2s; box-shadow:0 0 24px rgba(0,212,255,0.25);
+      white-space:nowrap;
     }
-    .btn-primary:hover { transform: translateY(-3px); }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 0 40px rgba(0,212,255,0.45); }
+
     .btn-secondary {
-      background: var(--card);
-      color: var(--text);
-      border: 1px solid var(--border);
-      padding: 1rem 2rem;
-      border-radius: 9999px;
-      font-weight: 600;
-      transition: all 0.3s ease;
+      background:var(--card); color:var(--text);
+      padding:0.75rem 1.6rem; border-radius:8px;
+      font-weight:500; font-size:0.875rem; text-decoration:none;
+      border:1px solid var(--border); transition:all 0.2s; white-space:nowrap;
     }
-    .btn-secondary:hover {
-      border-color: var(--cyan);
-      color: var(--cyan);
-    }
+    .btn-secondary:hover { border-color:var(--cyan); color:var(--cyan); }
+
+    /* hero stats ticker */
     .hero-stats {
-      display: flex;
-      gap: clamp(1.5rem, 5vw, 3.5rem);
-      margin-top: 4rem;
-      flex-wrap: wrap;
-      justify-content: center;
+      display:flex; gap:clamp(1rem,4vw,2.5rem);
+      margin-top:3.5rem; flex-wrap:wrap; justify-content:center;
+      position:relative; z-index:1;
+      animation:fadeUp 0.7s 0.45s ease both;
     }
-    .stat-num {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(2.2rem, 5vw, 3.2rem);
-      font-weight: 800;
-      color: var(--cyan);
-      line-height: 1;
+    .stat { text-align:center; }
+    .stat-num { font-family:'Syne',sans-serif; font-size:1.6rem; font-weight:800; color:var(--cyan); line-height:1; }
+    .stat-label { font-size:0.7rem; color:var(--muted); margin-top:0.2rem; text-transform:uppercase; letter-spacing:0.05em; }
+
+    /* trust bar */
+    .trust-bar {
+      margin-top:3rem; position:relative; z-index:1;
+      display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap; justify-content:center;
+      animation:fadeUp 0.7s 0.55s ease both;
     }
-    .trust-bar { margin-top: 3.5rem; display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; justify-content: center; }
-    .trust-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.82rem; color: var(--muted); }
-    section { padding: clamp(4rem, 8vw, 7rem) 6%; position: relative; z-index: 2; }
-    .section-wrap { max-width: 1180px; margin: 0 auto; }
+    .trust-item {
+      display:flex; align-items:center; gap:0.45rem;
+      font-size:0.75rem; color:var(--muted);
+    }
+    .trust-item svg { flex-shrink:0; }
+    .trust-sep { width:1px; height:16px; background:var(--border); }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(18px);} to{opacity:1;transform:translateY(0);} }
+
+    /* ════════════════ SHARED SECTION ════════════════ */
+    section { padding:clamp(3rem,7vw,5.5rem) 6%; position:relative; }
+    .section-wrap    { max-width:1080px; margin:0 auto; }
+    .section-wrap-sm { max-width:860px;  margin:0 auto; }
+
     .section-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--cyan);
-      background: rgba(0,212,255,0.06);
-      border: 1px solid var(--border);
-      padding: 0.35rem 1rem;
-      border-radius: 9999px;
+      display:inline-block;
+      font-size:0.68rem; text-transform:uppercase; letter-spacing:0.13em;
+      color:var(--cyan); font-weight:600; margin-bottom:0.65rem;
+      padding:0.25rem 0.75rem; border:1px solid rgba(0,212,255,0.2);
+      border-radius:100px; background:rgba(0,212,255,0.05);
     }
+
     h2 {
-      font-family: 'Syne', sans-serif;
-      font-size: var(--h2);
-      font-weight: 800;
-      letter-spacing: -0.035em;
-      line-height: 1.1;
-      margin-bottom: 1.2rem;
+      font-family:'Syne',sans-serif;
+      font-size:var(--h2);
+      font-weight:800; letter-spacing:-0.025em;
+      color:var(--white); line-height:1.1; margin-bottom:0.85rem;
     }
-    .section-lead { max-width: 580px; color: var(--muted); font-size: 1.05rem; margin-bottom: 2.5rem; }
-    /* Clean loose list – used for EVERY section except Key Capabilities */
-    .loose-list {
-      list-style: none;
-      font-size: 1.05rem;
-      line-height: 1.75;
-      color: var(--muted);
+
+    .section-lead {
+      font-size:0.9rem; color:var(--muted);
+      max-width:520px; margin-bottom:2.25rem; line-height:1.7;
     }
-    .loose-list li {
-      margin-bottom: 1.4rem;
-      padding-left: 2rem;
-      position: relative;
+
+    /* two-col layout */
+    .two-col { display:grid; grid-template-columns:1fr 1fr; gap:clamp(2rem,5vw,4rem); align-items:center; }
+
+    /* ════════════════ PROBLEM ════════════════ */
+    .problem { background:var(--bg2); }
+    .problem-cards { display:grid; grid-template-columns:1fr 1fr; gap:0.875rem; }
+    .pcard {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:12px; padding:1.25rem; transition:border-color 0.2s,transform 0.2s;
     }
-    .loose-list li::before {
-      content: '•';
-      position: absolute;
-      left: 0;
-      color: var(--cyan);
-      font-size: 1.4rem;
-      line-height: 1;
+    .pcard:hover { border-color:rgba(0,212,255,0.3); transform:translateY(-3px); }
+    .pcard:last-child { grid-column:1/-1; }
+    .pcard-icon { font-size:1.35rem; margin-bottom:0.5rem; }
+    .pcard-title { font-family:'Syne',sans-serif; font-size:0.9rem; font-weight:700; color:var(--white); margin-bottom:0.35rem; }
+    .pcard-text  { font-size:0.8rem; color:var(--muted); line-height:1.55; }
+
+    /* ════════════════ HOW IT WORKS ════════════════ */
+    .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:1.1rem; }
+    .step {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:14px; padding:1.5rem 1.35rem;
+      position:relative; overflow:hidden; transition:all 0.3s;
     }
-    .loose-list strong { color: var(--text); }
-    /* ONLY Key Capabilities uses clean cards */
-    .key-capabilities-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.8rem;
+    .step::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background:linear-gradient(90deg,var(--cyan),transparent); opacity:0; transition:opacity 0.3s;
     }
-    .futuristic-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 2rem 1.6rem;
-      transition: all 0.4s ease;
+    .step:hover { border-color:rgba(0,212,255,0.25); transform:translateY(-4px); }
+    .step:hover::before { opacity:1; }
+    .step-num   { font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; color:rgba(0,212,255,0.1); line-height:1; margin-bottom:0.65rem; }
+    .step-icon  { font-size:1.35rem; margin-bottom:0.5rem; }
+    .step-title { font-family:'Syne',sans-serif; font-size:0.88rem; font-weight:700; color:var(--white); margin-bottom:0.35rem; }
+    .step-desc  { font-size:0.78rem; color:var(--muted); line-height:1.55; }
+
+    /* ════════════════ USE CASES ════════════════ */
+    .usecases { background:var(--bg2); }
+    .use-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:0.875rem; }
+    .use-card {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:12px; padding:1.35rem 0.875rem; text-align:center;
+      transition:all 0.3s; position:relative; overflow:hidden;
     }
-    .futuristic-card:hover {
-      transform: translateY(-6px);
-      border-color: var(--cyan);
+    .use-card::after {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(135deg,rgba(0,212,255,0.04),transparent);
+      opacity:0; transition:opacity 0.3s;
     }
-    .futuristic-card .step-num {
-      font-family: 'Syne', sans-serif;
-      font-size: 2.8rem;
-      font-weight: 800;
-      color: rgba(0,212,255,0.12);
-      margin-bottom: 0.6rem;
+    .use-card:hover { border-color:var(--cyan); transform:translateY(-4px); }
+    .use-card:hover::after { opacity:1; }
+    .use-icon  { font-size:1.6rem; margin-bottom:0.75rem; }
+    .use-title { font-family:'Syne',sans-serif; font-size:0.8rem; font-weight:700; color:var(--white); margin-bottom:0.3rem; }
+    .use-desc  { font-size:0.72rem; color:var(--muted); line-height:1.5; }
+
+    /* ════════════════ COMPETITIVE ════════════════ */
+    .comp { background:var(--bg); }
+    .comp-table { background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+    .comp-row { display:grid; grid-template-columns:1.6fr 1fr 1fr; border-bottom:1px solid var(--border); }
+    .comp-row:last-child { border-bottom:none; }
+    .comp-row:not(.header):hover { background:rgba(255,255,255,0.02); }
+    .comp-cell { padding:0.85rem 1.25rem; font-size:0.83rem; }
+    .comp-row.header .comp-cell { font-family:'Syne',sans-serif; font-weight:700; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); background:rgba(255,255,255,0.025); }
+    .comp-cell.feature   { color:var(--text); }
+    .comp-cell.legacy    { color:#ff6b6b; display:flex; align-items:center; gap:0.35rem; }
+    .comp-cell.eyesentrix{ color:var(--cyan); display:flex; align-items:center; gap:0.35rem; font-weight:600; }
+
+    /* ════════════════ PRICING ════════════════ */
+    .pricing { background:var(--bg2); }
+    .biz-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:1.1rem; }
+    .biz-card {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:14px; padding:1.6rem 1.35rem; transition:border-color 0.2s,transform 0.2s;
     }
-    .futuristic-card .step-icon { font-size: 2.2rem; margin-bottom: 1rem; }
-    .futuristic-card .step-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 0.6rem;
+    .biz-card:hover { transform:translateY(-4px); }
+    .biz-card.highlight { border-color:var(--cyan); background:rgba(0,212,255,0.05); }
+    .biz-badge {
+      display:inline-block; font-size:0.65rem; font-weight:700; text-transform:uppercase;
+      letter-spacing:0.08em; padding:0.2rem 0.6rem; border-radius:100px;
+      background:var(--cyan); color:var(--bg); margin-bottom:1rem;
     }
-    /* Perfect mobile + desktop */
-    @media (max-width: 900px) {
-      .nav-links { display: none; }
-      .nav-burger { display: flex; }
+    .biz-card-icon { font-size:1.4rem; margin-bottom:1rem; }
+    .biz-card-title { font-family:'Syne',sans-serif; font-size:1rem; font-weight:700; color:var(--white); margin-bottom:0.4rem; }
+    .biz-price { font-family:'Syne',sans-serif; font-size:1.5rem; font-weight:800; color:var(--cyan); margin-bottom:0.875rem; line-height:1.15; }
+    .biz-price span { font-size:0.78rem; font-weight:400; color:var(--muted); }
+    .biz-features { list-style:none; }
+    .biz-features li { font-size:0.8rem; color:var(--muted); padding:0.3rem 0; display:flex; align-items:center; gap:0.45rem; border-bottom:1px solid rgba(255,255,255,0.04); }
+    .biz-features li:last-child { border-bottom:none; }
+    .biz-features li::before { content:'✓'; color:var(--cyan); font-size:0.72rem; font-weight:700; flex-shrink:0; }
+
+    /* ════════════════ MARKET ════════════════ */
+    .market { background:var(--bg); }
+    .market-cards { display:grid; grid-template-columns:1fr 1fr; gap:0.875rem; }
+    .mcard {
+      background:var(--card); border:1px solid var(--border); border-radius:12px; padding:1.25rem;
+      transition:border-color 0.2s,transform 0.2s;
     }
-    @media (max-width: 600px) {
-      section { padding: 3rem 5%; }
-      .loose-list li { font-size: 1rem; }
+    .mcard:hover { border-color:rgba(0,212,255,0.3); transform:translateY(-3px); }
+    .mcard-num   { font-family:'Syne',sans-serif; font-size:1.85rem; font-weight:800; color:var(--cyan); line-height:1; margin-bottom:0.2rem; }
+    .mcard-label { font-size:0.77rem; color:var(--muted); }
+
+    /* GCC map visual */
+    .gcc-visual {
+      background:var(--card); border:1px solid var(--border); border-radius:16px;
+      padding:2rem; text-align:center; position:relative; overflow:hidden;
+    }
+    .gcc-dots {
+      display:flex; flex-wrap:wrap; gap:0.5rem; justify-content:center; margin-bottom:1.25rem;
+    }
+    .gcc-dot {
+      display:flex; flex-direction:column; align-items:center; gap:0.3rem;
+      background:rgba(0,212,255,0.06); border:1px solid rgba(0,212,255,0.15);
+      border-radius:8px; padding:0.5rem 0.75rem; font-size:0.72rem;
+      color:var(--text); font-weight:500;
+    }
+    .gcc-dot span { font-size:1rem; }
+
+    /* ════════════════ FINANCIALS ════════════════ */
+    .fin { background:var(--bg2); }
+    .fin-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:1.1rem; margin-bottom:1.25rem; }
+    .fin-card {
+      background:var(--card); border:1px solid var(--border); border-radius:14px;
+      padding:1.6rem; text-align:center; position:relative; overflow:hidden;
+      transition:border-color 0.2s,transform 0.2s;
+    }
+    .fin-card:hover { border-color:rgba(0,212,255,0.25); transform:translateY(-3px); }
+    .fin-card::before {
+      content:''; position:absolute; bottom:0; left:0; right:0; height:3px;
+      background:linear-gradient(90deg,var(--cyan),var(--blue));
+      transform:scaleX(0); transition:transform 0.3s; transform-origin:left;
+    }
+    .fin-card:hover::before { transform:scaleX(1); }
+    .fin-year         { font-size:0.68rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); margin-bottom:0.5rem; }
+    .fin-stores       { font-family:'Syne',sans-serif; font-size:2.2rem; font-weight:800; color:var(--white); line-height:1; }
+    .fin-stores-label { font-size:0.75rem; color:var(--muted); margin-bottom:0.75rem; }
+    .fin-monthly      { font-size:0.8rem; color:var(--cyan); font-weight:600; margin-bottom:0.3rem; }
+    .fin-annual       { font-family:'Syne',sans-serif; font-size:1.3rem; font-weight:800; color:var(--cyan); }
+    .fin-annual-label { font-size:0.68rem; color:var(--muted); }
+    .fin-highlight {
+      background:rgba(0,212,255,0.04); border:1px solid rgba(0,212,255,0.15);
+      border-radius:12px; padding:1.35rem 1.75rem;
+      display:flex; gap:2rem; align-items:center; flex-wrap:wrap;
+    }
+    .fin-hl-stat .num   { font-family:'Syne',sans-serif; font-size:1.6rem; font-weight:800; color:var(--cyan); }
+    .fin-hl-stat .label { font-size:0.74rem; color:var(--muted); }
+
+    /* ════════════════ ROADMAP ════════════════ */
+    .roadmap { background:var(--bg); }
+    .phases { display:flex; flex-direction:column; gap:1.1rem; }
+    .phase {
+      display:grid; grid-template-columns:110px 1fr; gap:1.35rem; align-items:start;
+      background:var(--card); border:1px solid var(--border); border-radius:14px;
+      padding:1.6rem; position:relative; overflow:hidden; transition:border-color 0.2s;
+    }
+    .phase::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:linear-gradient(to bottom,var(--cyan),var(--blue)); opacity:0.5; }
+    .phase:hover { border-color:rgba(0,212,255,0.25); }
+    .phase-tag  { font-family:'Syne',sans-serif; font-size:0.72rem; font-weight:700; color:var(--cyan); text-transform:uppercase; letter-spacing:0.06em; }
+    .phase-num  { font-family:'Syne',sans-serif; font-size:2.5rem; font-weight:800; color:rgba(255,255,255,0.04); line-height:1; }
+    .phase-title{ font-family:'Syne',sans-serif; font-size:1rem; font-weight:700; color:var(--white); margin-bottom:0.4rem; }
+    .phase-desc { font-size:0.82rem; color:var(--muted); line-height:1.6; }
+
+    /* ════════════════ TEAM ════════════════ */
+    .team { background:var(--bg2); }
+    .team-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.1rem; }
+    .team-card {
+      background:var(--card); border:1px solid var(--border); border-radius:14px;
+      padding:2rem 1.35rem; text-align:center; transition:all 0.3s; position:relative; overflow:hidden;
+    }
+    .team-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:100%;
+      background:radial-gradient(circle at 50% 0%,rgba(0,212,255,0.06),transparent 65%);
+      opacity:0; transition:opacity 0.3s;
+    }
+    .team-card:hover { border-color:rgba(0,212,255,0.3); transform:translateY(-5px); }
+    .team-card:hover::before { opacity:1; }
+    .team-avatar {
+      width:60px; height:60px;
+      background:linear-gradient(135deg,rgba(0,212,255,0.15),rgba(26,76,255,0.15));
+      border:2px solid rgba(0,212,255,0.25); border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.5rem; margin:0 auto 1rem;
+    }
+    .team-name { font-family:'Syne',sans-serif; font-size:1rem; font-weight:700; color:var(--white); margin-bottom:0.2rem; }
+    .team-role { font-size:0.68rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--cyan); margin-bottom:0.3rem; }
+    .team-dept { font-size:0.8rem; color:var(--muted); }
+
+    /* ════════════════ FEATURES MARQUEE ════════════════ */
+    .marquee-section { background:rgba(0,212,255,0.03); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:1.25rem 0; overflow:hidden; }
+    .marquee-track {
+      display:flex; gap:2.5rem; width:max-content;
+      animation:marquee 25s linear infinite;
+    }
+    .marquee-section:hover .marquee-track { animation-play-state:paused; }
+    .marquee-item { display:flex; align-items:center; gap:0.6rem; white-space:nowrap; font-size:0.78rem; color:var(--muted); font-weight:500; }
+    .marquee-item span { color:var(--cyan); font-size:0.9rem; }
+    @keyframes marquee { from{transform:translateX(0);} to{transform:translateX(-50%);} }
+
+    /* ════════════════ CTA ════════════════ */
+    .cta { background:var(--bg2); text-align:center; }
+    .cta-inner { max-width:600px; margin:0 auto; }
+    .cta-glow {
+      width:300px; height:300px; border-radius:50%;
+      background:radial-gradient(circle,rgba(0,212,255,0.1),transparent 70%);
+      margin:0 auto 2rem; display:flex; align-items:center; justify-content:center;
+    }
+    .cta-glow-inner {
+      width:160px; height:160px; border-radius:50%;
+      border:1px solid rgba(0,212,255,0.2);
+      display:flex; align-items:center; justify-content:center;
+      font-size:3rem;
+      animation:pulse-glow 3s ease-in-out infinite;
+    }
+    @keyframes pulse-glow {
+      0%,100%{box-shadow:0 0 0 0 rgba(0,212,255,0.15);}
+      50%{box-shadow:0 0 0 20px rgba(0,212,255,0);}
+    }
+    .cta h2 { margin-bottom:0.75rem; }
+    .cta p  { color:var(--muted); font-size:0.9rem; margin-bottom:2rem; line-height:1.7; }
+    .cta-contact { display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap; }
+
+    /* ════════════════ FOOTER ════════════════ */
+    footer {
+      border-top:1px solid var(--border); padding:1.35rem 6%;
+      display:flex; align-items:center; justify-content:space-between;
+      background:var(--bg); flex-wrap:wrap; gap:0.65rem;
+    }
+    .footer-logo { display:flex; align-items:center; gap:0.55rem; }
+    .footer-logo img { width:24px; height:24px; object-fit:contain; }
+    .footer-logo span { font-family:'Syne',sans-serif; font-size:0.9rem; font-weight:700; color:var(--text); }
+    .footer-copy { font-size:0.74rem; color:var(--muted); }
+    .footer-link { font-size:0.74rem; color:var(--cyan); text-decoration:none; }
+    .footer-link:hover { text-decoration:underline; }
+
+    /* ════════════════ TABLET ≤900 ════════════════ */
+    @media (max-width:900px) {
+      :root { --h1:2.1rem; --h2:1.6rem; }
+      .two-col { grid-template-columns:1fr; }
+      .steps   { grid-template-columns:1fr 1fr; }
+      .use-grid{ grid-template-columns:repeat(3,1fr); }
+      .biz-cards{ grid-template-columns:1fr 1fr; }
+      .fin-cards{ grid-template-columns:1fr 1fr; }
+      .team-grid{ grid-template-columns:1fr 1fr; }
+      .market .two-col { grid-template-columns:1fr; }
+      .nav-links  { display:none; }
+      .nav-burger { display:flex; }
+      .orb1,.orb2,.hero-ring { display:none; }
+      .fin-highlight > div:last-child { display:none; }
+      .gcc-visual { display:none; }
+    }
+
+    /* ════════════════ MOBILE ≤600 ════════════════ */
+    @media (max-width:600px) {
+      :root { --h1:1.7rem; --h2:1.35rem; --body:0.88rem; }
+      section { padding:2.5rem 5%; }
+      .hero   { padding:5.5rem 5% 2.5rem; min-height:100svh; }
+      .hero-logo { width:64px; height:64px; }
+      .hero-sub { font-size:0.85rem; }
+      .hero-stats { margin-top:2rem; gap:1rem; }
+      .stat-num { font-size:1.3rem; }
+      .trust-bar { gap:0.75rem; }
+      .trust-sep { display:none; }
+
+      .steps    { grid-template-columns:1fr; }
+      .use-grid { grid-template-columns:1fr 1fr; }
+      .problem-cards { grid-template-columns:1fr; }
+      .pcard:last-child { grid-column:auto; }
+      .biz-cards { grid-template-columns:1fr; }
+      .fin-cards { grid-template-columns:1fr; }
+      .market-cards { grid-template-columns:1fr 1fr; }
+      .team-grid { grid-template-columns:1fr; }
+      .phase     { grid-template-columns:1fr; }
+      .phase-num { font-size:1.8rem; }
+      .comp-cell { padding:0.6rem 0.75rem; font-size:0.75rem; }
+      .fin-highlight { flex-direction:column; gap:0.875rem; padding:1rem 1.25rem; }
+      .fin-hl-stat { display:flex; align-items:center; gap:0.875rem; }
+      footer { flex-direction:column; align-items:flex-start; gap:0.4rem; }
+      .footer-copy { order:3; }
+      .cta-contact { flex-direction:column; align-items:stretch; }
+      .btn-primary,.btn-secondary { text-align:center; width:100%; }
+      .cta-glow { width:200px; height:200px; }
+      .cta-glow-inner { width:110px; height:110px; font-size:2.2rem; }
+    }
+
+    /* ════════════════ XS ≤380 ════════════════ */
+    @media (max-width:380px) {
+      :root { --h1:1.55rem; --h2:1.2rem; }
+      .use-grid { grid-template-columns:1fr; }
+      .market-cards { grid-template-columns:1fr; }
     }
   </style>
 </head>
 <body>
-  <!-- NAV -->
-  <nav id="nav">
-    <a class="nav-logo" href="#">
-      <img src="logo.png" alt="Eyesentrix Logo" />
-      <span>eyesentrix</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="#problem">Problem</a></li>
-      <li><a href="#capabilities">Key Capabilities</a></li>
-      <li><a href="#usecases">Use Cases</a></li>
-      <li><a href="#pricing">Pricing</a></li>
-      <li><a href="#financials">Financials</a></li>
-      <li><a href="#team">Team</a></li>
-      <li><a href="#contact" class="nav-cta">Get In Touch</a></li>
-    </ul>
-    <button class="nav-burger" id="burger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </nav>
-  <nav class="nav-drawer" id="drawer">
-    <a href="#problem" onclick="closeDrawer()">Problem</a>
-    <a href="#capabilities" onclick="closeDrawer()">Key Capabilities</a>
-    <a href="#usecases" onclick="closeDrawer()">Use Cases</a>
-    <a href="#pricing" onclick="closeDrawer()">Pricing</a>
-    <a href="#financials" onclick="closeDrawer()">Financials</a>
-    <a href="#team" onclick="closeDrawer()">Team</a>
-    <a href="#contact" onclick="closeDrawer()" class="nav-cta" style="margin-top:1rem;">Get In Touch</a>
-  </nav>
 
-  <!-- HERO -->
-  <section class="hero" id="hero">
-    <canvas id="hero-canvas"></canvas>
-    <div class="hero-bg"></div>
-    <div class="hero-content">
-      <div class="hero-badge">
-        QATAR → GCC 2026
-      </div>
-      <img src="logo.png" alt="Eyesentrix AI" class="hero-logo" />
-      <h1>AI That <span style="color:#00d4ff;">Watches,</span><br>Understands &amp; Protects</h1>
-      <p class="hero-sub">AI-Powered Remote Monitoring &amp; Business Intelligence. Turn passive CCTV into real-time intelligence. Zero new hardware. Live in days.</p>
-      <div class="hero-actions">
-        <a href="#contact" class="btn-primary">Request Live Demo</a>
-        <a href="#capabilities" class="btn-secondary">Explore Capabilities</a>
-      </div>
-      <div class="hero-stats" id="stats">
-        <div class="stat"><div class="stat-num" data-count="5">0</div><div class="stat-label">SECOND ALERTS</div></div>
-        <div class="stat"><div class="stat-num" data-count="100000000">0</div><div class="stat-label">GCC CAMERAS</div></div>
-        <div class="stat"><div class="stat-num" data-count="0">0</div><div class="stat-label">NEW HARDWARE</div></div>
-        <div class="stat"><div class="stat-num" data-count="72">0</div><div class="stat-label">GROSS MARGIN</div></div>
-      </div>
-      <div class="trust-bar">
-        <div class="trust-item"><span style="color:var(--cyan);">●</span> Production-Ready</div>
-        <div class="trust-item"><span style="color:var(--cyan);">●</span> Live Qatar Pilots</div>
-        <div class="trust-item"><span style="color:var(--cyan);">●</span> Pure SaaS</div>
-        <div class="trust-item"><span style="color:var(--cyan);">●</span> Arabic + English</div>
-      </div>
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <img src="logo.png" alt="Eyesentrix Logo" />
+    <span>eyesentrix</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#solution">Solution</a></li>
+    <li><a href="#usecases">Use Cases</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#financials">Financials</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#contact" class="nav-cta">Get In Touch</a></li>
+  </ul>
+  <button class="nav-burger" id="burger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<nav class="nav-drawer" id="drawer">
+  <a href="#solution"   onclick="closeDrawer()">Solution</a>
+  <a href="#usecases"   onclick="closeDrawer()">Use Cases</a>
+  <a href="#pricing"    onclick="closeDrawer()">Pricing</a>
+  <a href="#financials" onclick="closeDrawer()">Financials</a>
+  <a href="#team"       onclick="closeDrawer()">Team</a>
+  <a href="#contact"    onclick="closeDrawer()" class="drawer-cta">Get In Touch</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="hero-ring"></div>
+
+  <div class="hero-badge">Qatar → GCC Expansion · 2026</div>
+  <img src="logo.png" alt="Eyesentrix AI" class="hero-logo" />
+  <h1>AI That <span class="accent">Watches,</span><br>Understands &amp; Protects</h1>
+  <p class="hero-sub">AI-Powered Remote Monitoring &amp; Business Intelligence — transforming passive CCTV into real-time operational intelligence. No new hardware. Live in days.</p>
+  <div class="hero-actions">
+    <a href="#contact" class="btn-primary">Request a Demo</a>
+    <a href="#solution" class="btn-secondary">See How It Works</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">&lt;5s</div><div class="stat-label">Alert Latency</div></div>
+    <div class="stat"><div class="stat-num">100M+</div><div class="stat-label">GCC Cameras</div></div>
+    <div class="stat"><div class="stat-num">0</div><div class="stat-label">New Hardware</div></div>
+    <div class="stat"><div class="stat-num">72%</div><div class="stat-label">Gross Margin</div></div>
+  </div>
+  <div class="trust-bar">
+    <div class="trust-item">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#00d4ff" stroke-width="1.5"/><path d="M4.5 7l2 2 3-3" stroke="#00d4ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Production-Ready
     </div>
-  </section>
-
-  <!-- MARQUEE -->
-  <div style="background:rgba(0,212,255,0.03);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.1rem 0;overflow:hidden;">
-    <div style="display:flex;gap:2.5rem;width:max-content;animation:marquee 32s linear infinite;">
-      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">🛒</span> Shoplifting Detection</div>
-      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">⚡</span> Sub-5s Alerts</div>
-      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">📊</span> Real-Time Analytics</div>
-      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">🔒</span> Restricted Area Monitoring</div>
-      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">👥</span> Queue Management</div>
-      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">📦</span> Stock Visibility</div>
-      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">🤖</span> Agentic AI</div>
-      <!-- Duplicate for seamless loop -->
-      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">🛒</span> Shoplifting Detection</div>
-      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">⚡</span> Sub-5s Alerts</div>
-      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">📊</span> Real-Time Analytics</div>
-      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">🔒</span> Restricted Area Monitoring</div>
-      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">👥</span> Queue Management</div>
-      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">📦</span> Stock Visibility</div>
-      <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">🤖</span> Agentic AI</div>
+    <div class="trust-sep"></div>
+    <div class="trust-item">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#00d4ff" stroke-width="1.5"/><path d="M4.5 7l2 2 3-3" stroke="#00d4ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Live Pilots in Qatar
+    </div>
+    <div class="trust-sep"></div>
+    <div class="trust-item">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#00d4ff" stroke-width="1.5"/><path d="M4.5 7l2 2 3-3" stroke="#00d4ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      No Capex Required
+    </div>
+    <div class="trust-sep"></div>
+    <div class="trust-item">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#00d4ff" stroke-width="1.5"/><path d="M4.5 7l2 2 3-3" stroke="#00d4ff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Arabic &amp; English Support
     </div>
   </div>
+</section>
 
-  <!-- PROBLEM -->
-  <section id="problem" class="reveal" style="background:var(--bg2);">
-    <div class="section-wrap">
-      <div class="section-label">THE PROBLEM</div>
-      <h2>Cameras Are Everywhere.<br>Losses Still Happen.</h2>
-      <p class="section-lead">Today's CCTV is a passive archive — not a prevention tool. No real-time action. No intelligence.</p>
-      <ul class="loose-list">
-        <li>100M+ cameras deployed across the GCC with almost zero intelligence layer on top.</li>
-        <li>Zero prevention — losses are only discovered after the fact.</li>
-        <li>Human operators cannot monitor hundreds of feeds simultaneously.</li>
-        <li>Reactive by design. No real-time alerts. No operational control.</li>
-      </ul>
-    </div>
-  </section>
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <div class="marquee-item"><span>🛒</span> Shoplifting Detection</div>
+    <div class="marquee-item"><span>⚡</span> Sub-5s Alerts</div>
+    <div class="marquee-item"><span>📊</span> Real-Time Analytics</div>
+    <div class="marquee-item"><span>🔒</span> Restricted Area Monitoring</div>
+    <div class="marquee-item"><span>👥</span> Queue Management</div>
+    <div class="marquee-item"><span>📦</span> Stock Visibility</div>
+    <div class="marquee-item"><span>🤖</span> AI-Powered Decisions</div>
+    <div class="marquee-item"><span>🌍</span> GCC-Ready Platform</div>
+    <div class="marquee-item"><span>💬</span> Arabic Interface</div>
+    <div class="marquee-item"><span>☁️</span> Pure SaaS · No Hardware</div>
+    <!-- duplicate for seamless loop -->
+    <div class="marquee-item"><span>🛒</span> Shoplifting Detection</div>
+    <div class="marquee-item"><span>⚡</span> Sub-5s Alerts</div>
+    <div class="marquee-item"><span>📊</span> Real-Time Analytics</div>
+    <div class="marquee-item"><span>🔒</span> Restricted Area Monitoring</div>
+    <div class="marquee-item"><span>👥</span> Queue Management</div>
+    <div class="marquee-item"><span>📦</span> Stock Visibility</div>
+    <div class="marquee-item"><span>🤖</span> AI-Powered Decisions</div>
+    <div class="marquee-item"><span>🌍</span> GCC-Ready Platform</div>
+    <div class="marquee-item"><span>💬</span> Arabic Interface</div>
+    <div class="marquee-item"><span>☁️</span> Pure SaaS · No Hardware</div>
+  </div>
+</div>
 
-  <!-- KEY CAPABILITIES (ONLY section with cards) -->
-  <section id="capabilities" class="reveal">
-    <div class="section-wrap">
-      <div class="section-label">KEY CAPABILITIES</div>
-      <h2>Intelligence Without New Hardware</h2>
-      <p class="section-lead">Eyesentrix AI connects to your existing CCTV and turns every camera into a real-time AI brain — deployed in days, not months. Pure SaaS, zero capex.</p>
-      <div class="key-capabilities-grid">
-        <div class="futuristic-card">
-          <div class="step-num">01</div>
-          <div class="step-icon">📹</div>
-          <div class="step-title">Live Cameras</div>
-          <p>Plug into your existing CCTV. No rip-and-replace. Zero hardware dependency.</p>
+<!-- PROBLEM -->
+<section class="problem reveal">
+  <div class="section-wrap">
+    <div class="two-col">
+      <div>
+        <div class="section-label">The Problem</div>
+        <h2>Cameras Are Everywhere.<br>Losses Still Happen.</h2>
+        <p class="section-lead">Today's CCTV is a passive archive — not a prevention tool. Footage is reviewed after damage is done. No real-time action. No control. No intelligence.</p>
+      </div>
+      <div class="problem-cards">
+        <div class="pcard">
+          <div class="pcard-icon">📷</div>
+          <div class="pcard-title">100M+ Cameras</div>
+          <div class="pcard-text">Deployed across the GCC with almost zero intelligence layer on top.</div>
         </div>
-        <div class="futuristic-card">
-          <div class="step-num">02</div>
-          <div class="step-icon">🧠</div>
-          <div class="step-title">AI Engine</div>
-          <p>Computer vision processes every feed in real-time, detecting anomalies in under 5 seconds.</p>
+        <div class="pcard">
+          <div class="pcard-icon">⏱️</div>
+          <div class="pcard-title">Zero Prevention</div>
+          <div class="pcard-text">Reactive by design — losses are only discovered after the fact.</div>
         </div>
-        <div class="futuristic-card">
-          <div class="step-num">03</div>
-          <div class="step-icon">🔔</div>
-          <div class="step-title">Real-Time Alerts</div>
-          <p>Human-verified alerts trigger immediate responses across your entire operation.</p>
-        </div>
-        <div class="futuristic-card">
-          <div class="step-num">04</div>
-          <div class="step-icon">📊</div>
-          <div class="step-title">Dashboard Analytics</div>
-          <p>Unified view across all locations and cameras from a single control center.</p>
-        </div>
-        <div class="futuristic-card">
-          <div class="step-num">05</div>
-          <div class="step-icon">🎬</div>
-          <div class="step-title">Evidence Recorded</div>
-          <p>Every incident auto-logged with timestamped footage for audit and legal use.</p>
-        </div>
-        <div class="futuristic-card">
-          <div class="step-num">06</div>
-          <div class="step-icon">🎯</div>
-          <div class="step-title">Operations Control</div>
-          <p>Manage staff, access, inventory and security all from one platform.</p>
+        <div class="pcard">
+          <div class="pcard-icon">👁️</div>
+          <div class="pcard-title">No Real-Time Action</div>
+          <div class="pcard-text">Human operators cannot monitor hundreds of feeds simultaneously. AI can.</div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- USE CASES -->
-  <section id="usecases" class="reveal" style="background:var(--bg2);">
-    <div class="section-wrap">
-      <div class="section-label">USE CASES</div>
-      <h2>5 Core Use Cases — Live Alerts in &lt;5 Seconds</h2>
-      <p class="section-lead">Every critical business scenario covered in real time — from shoplifting to crowd management.</p>
-      <ul class="loose-list">
-        <li><strong>Shoplifting Detection</strong> — Instant behavioral anomaly alerts on the sales floor.</li>
-        <li><strong>Staff Monitoring</strong> — Track compliance, productivity, and protocol adherence.</li>
-        <li><strong>Restricted Area Alerts</strong> — Unauthorized access detected and flagged immediately.</li>
-        <li><strong>Queue &amp; Crowd Tracking</strong> — Optimize staffing and customer experience in real time.</li>
-        <li><strong>Stock Visibility</strong> — Monitor inventory flow and detect shrinkage patterns.</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- COMPETITIVE -->
-  <section class="reveal">
-    <div class="section-wrap">
-      <div class="section-label">COMPETITIVE ANALYSIS</div>
-      <h2>We Win on Speed, Cost &amp; Simplicity.</h2>
-      <p class="section-lead">Legacy CCTV is passive, expensive, and slow to deploy. Eyesentrix AI flips every assumption.</p>
-      <table style="width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;">
-        <tr style="background:rgba(255,255,255,0.025);">
-          <th style="padding:1rem 1.5rem;text-align:left;font-weight:700;color:var(--muted);font-size:0.8rem;">Feature</th>
-          <th style="padding:1rem 1.5rem;text-align:left;font-weight:700;color:var(--muted);font-size:0.8rem;">Legacy CCTV</th>
-          <th style="padding:1rem 1.5rem;text-align:left;font-weight:700;color:var(--cyan);font-size:0.8rem;">Eyesentrix AI</th>
-        </tr>
-        <tr><td style="padding:1rem 1.5rem;border-top:1px solid var(--border);">Alert Type</td><td style="padding:1rem 1.5rem;border-top:1px solid var(--border);color:#ff6b6b;">Passive Only</td><td style="padding:1rem 1.5rem;border-top:1px solid var(--border);color:var(--cyan);">Real-Time AI</td></tr>
-        <tr><td style="padding:1rem 1.5rem;border-top:1px solid var(--border);">Hardware</td><td style="padding:1rem 1.5rem;border-top:1px solid var(--border);color:#ff6b6b;">Heavy Install</td><td style="padding:1rem 1.5rem;border-top:1px solid var(--border);color:var(--cyan);">Existing Cameras</td></tr>
-        <tr><td style="padding:1rem 1.5rem;border-top:1px solid var(--border);">Upfront Cost</td><td style="padding:1rem 1.5rem;border-top:1px solid var(--border);color:#ff6b6b;">Expensive Capex</td><td style="padding:1rem 1.5rem;border-top:1px solid var(--border);color:var(--cyan);">Affordable SaaS</td></tr>
-        <tr><td style="padding:1rem 1.5rem;border-top:1px solid var(--border);">Deployment</td><td style="padding:1rem 1.5rem;border-top:1px solid var(--border);color:#ff6b6b;">Multi-Week</td><td style="padding:1rem 1.5rem;border-top:1px solid var(--border);color:var(--cyan);">Live in Days</td></tr>
-        <tr><td style="padding:1rem 1.5rem;border-top:1px solid var(--border);">Language</td><td style="padding:1rem 1.5rem;border-top:1px solid var(--border);color:#ff6b6b;">English Only</td><td style="padding:1rem 1.5rem;border-top:1px solid var(--border);color:var(--cyan);">Arabic &amp; English</td></tr>
-      </table>
-    </div>
-  </section>
-
-  <!-- PRICING -->
-  <section id="pricing" class="reveal" style="background:var(--bg2);">
-    <div class="section-wrap">
-      <div class="section-label">PRICING</div>
-      <h2>Affordable, Scalable Pricing</h2>
-      <p class="section-lead">SaaS + Managed Monitoring — deploy one or both. Scale from pilot to enterprise with zero friction and &lt;3 month ROI.</p>
-      <ul class="loose-list">
-        <li><strong>SaaS Platform</strong> — QAR 90 / camera / month<br>AI detection engine, real-time alerts dashboard, analytics &amp; reporting.</li>
-        <li><strong>Managed Monitoring</strong> — QAR 2,000 / store / month<br>24/7 human verification, remote command center, incident management, dedicated response team.</li>
-        <li><strong>Combined (10 Cameras)</strong> — QAR 2,900 / store / month<br>Full AI + Human coverage. High-margin recurring ARR. &lt;3 months ROI payback. No capital expenditure.</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- MARKET -->
-  <section class="reveal">
-    <div class="section-wrap">
-      <div class="section-label">MARKET OPPORTUNITY</div>
-      <h2>Massive Addressable Market</h2>
-      <p class="section-lead">Starting in Qatar, then scaling across the entire GCC — one of the fastest-growing tech adoption corridors in the world.</p>
-      <ul class="loose-list">
-        <li><strong>Phase 1 (2026):</strong> Qatar — retail chains, hypermarkets, malls &amp; warehouses.</li>
-        <li><strong>Phase 2 (2027+):</strong> UAE, Saudi Arabia, Kuwait, Bahrain &amp; Oman via channel partners and direct enterprise sales.</li>
-        <li>5,000+ Qatar retail &amp; warehouse sites</li>
-        <li>25,000+ GCC potential sites by 2027</li>
-        <li>100M+ cameras deployed across GCC</li>
-        <li>6 countries in expansion plan</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- FINANCIALS -->
-  <section id="financials" class="reveal" style="background:var(--bg2);">
-    <div class="section-wrap">
-      <div class="section-label">FINANCIAL PROJECTIONS</div>
-      <h2>Strong Recurring Revenue Growth</h2>
-      <p class="section-lead">Clear path to QAR 13M+ annual run-rate in 3 years with 72% gross margin.</p>
-      <ul class="loose-list">
-        <li><strong>Year 1</strong> — 75 stores • QAR 218K/month • QAR 2.6M annual revenue</li>
-        <li><strong>Year 2</strong> — 200 stores • QAR 580K/month • QAR 6.96M annual revenue</li>
-        <li><strong>Year 3</strong> — 375 stores • QAR 1.09M/month • QAR 13M+ annual revenue</li>
-        <li>72% Gross Margin • &lt;3 months payback period • Pure recurring ARR</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- ROADMAP -->
-  <section class="reveal">
-    <div class="section-wrap">
-      <div class="section-label">VISION &amp; ROADMAP</div>
-      <h2>The GCC Leader in AI Video Analytics</h2>
-      <p class="section-lead">Three phases — from real-time monitoring to fully autonomous operational intelligence.</p>
-      <ul class="loose-list">
-        <li><strong>Phase 1 — Now</strong>: Real-time Monitoring &amp; Control. Production-ready AI engine. Sub-5-second alerts. Live pilots in Qatar.</li>
-        <li><strong>Phase 2 — Next</strong>: Operations Copilot. Natural language chat + voice commands in English &amp; Arabic. Proactive suggestions.</li>
-        <li><strong>Phase 3 — Future</strong>: Full Agentic AI Layer. Autonomous intelligence that suggests and executes actions (with human approval).</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- TEAM -->
-  <section id="team" class="reveal" style="background:var(--bg2);">
-    <div class="section-wrap">
-      <div class="section-label" style="text-align:center;display:block;">OUR TEAM</div>
-      <h2 style="text-align:center;margin-bottom:2rem;">The People Behind Eyesentrix AI</h2>
-      <ul class="loose-list" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;">
-        <li><strong>Mohiuddin Qazi</strong> — Co-Founder, Business &amp; Finance</li>
-        <li><strong>Mateen Shaikh</strong> — Co-Founder, Sales &amp; Marketing</li>
-        <li><strong>Ayesha Qureshi</strong> — Co-Founder, Technology, AI &amp; Operations</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section id="contact" class="reveal">
-    <div class="section-wrap" style="text-align:center;max-width:620px;margin:0 auto;">
-      <div class="section-label" style="display:inline-block;">GET IN TOUCH</div>
-      <h2>Ready to See It In Action?</h2>
-      <p style="color:var(--muted);font-size:1.05rem;margin-bottom:2rem;">Request a live demo, explore a pilot program, or discuss partnership opportunities with the Eyesentrix team.</p>
-      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-        <a href="mailto:mohiuddin.qazi@eyesentrix.com" class="btn-primary">📧 Email Us</a>
-        <a href="https://www.eyesentrix.io" target="_blank" class="btn-secondary">🌐 Visit eyesentrix.io</a>
+<!-- SOLUTION -->
+<section id="solution" class="reveal">
+  <div class="section-wrap">
+    <div class="section-label">The Solution</div>
+    <h2>Intelligence Without New Hardware</h2>
+    <p class="section-lead">Eyesentrix AI connects to existing CCTV and transforms it into a real-time AI monitoring system — deployed in days, not months. Pure SaaS, zero capex.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-icon">📹</div>
+        <div class="step-title">Live Cameras</div>
+        <div class="step-desc">Plug into your existing CCTV. No rip-and-replace. Zero hardware dependency.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-icon">🧠</div>
+        <div class="step-title">AI Engine</div>
+        <div class="step-desc">Computer vision processes every feed in real-time, detecting anomalies in under 5 seconds.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-icon">🔔</div>
+        <div class="step-title">Real-Time Alerts</div>
+        <div class="step-desc">Human-verified alerts trigger immediate responses across your entire operation.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-icon">📊</div>
+        <div class="step-title">Dashboard Analytics</div>
+        <div class="step-desc">Unified view across all locations and cameras from a single control center.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">05</div>
+        <div class="step-icon">🎬</div>
+        <div class="step-title">Evidence Recorded</div>
+        <div class="step-desc">Every incident auto-logged with timestamped footage for audit and legal use.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">06</div>
+        <div class="step-icon">🎯</div>
+        <div class="step-title">Operations Control</div>
+        <div class="step-desc">Manage staff, access, inventory and security all from one platform.</div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer style="border-top:1px solid var(--border);padding:1.35rem 6%;display:flex;align-items:center;justify-content:space-between;background:var(--bg);flex-wrap:wrap;gap:0.65rem;">
-    <div style="display:flex;align-items:center;gap:0.55rem;">
-      <img src="logo.png" alt="Eyesentrix" style="width:24px;height:24px;" />
-      <span style="font-family:'Syne',sans-serif;font-size:0.9rem;font-weight:700;color:var(--text);">eyesentrix</span>
+<!-- USE CASES -->
+<section class="usecases reveal" id="usecases">
+  <div class="section-wrap">
+    <div class="section-label">Use Cases</div>
+    <h2>5 Core Use Cases — Live Alerts in &lt;5 Seconds</h2>
+    <p class="section-lead">Every critical business scenario covered in real time — from shoplifting to crowd management.</p>
+    <div class="use-grid">
+      <div class="use-card">
+        <div class="use-icon">🛒</div>
+        <div class="use-title">Shoplifting Detection</div>
+        <div class="use-desc">Instant behavioral anomaly alerts on the sales floor.</div>
+      </div>
+      <div class="use-card">
+        <div class="use-icon">👔</div>
+        <div class="use-title">Staff Monitoring</div>
+        <div class="use-desc">Track compliance, productivity, and protocol adherence.</div>
+      </div>
+      <div class="use-card">
+        <div class="use-icon">🚫</div>
+        <div class="use-title">Restricted Area Alerts</div>
+        <div class="use-desc">Unauthorized access detected and flagged immediately.</div>
+      </div>
+      <div class="use-card">
+        <div class="use-icon">👥</div>
+        <div class="use-title">Queue &amp; Crowd Tracking</div>
+        <div class="use-desc">Optimize staffing and customer experience in real time.</div>
+      </div>
+      <div class="use-card">
+        <div class="use-icon">📦</div>
+        <div class="use-title">Stock Visibility</div>
+        <div class="use-desc">Monitor inventory flow and detect shrinkage patterns.</div>
+      </div>
     </div>
-    <span style="font-size:0.74rem;color:var(--muted);">© 2026 Eyesentrix AI · Qatar → GCC</span>
-    <a href="https://www.eyesentrix.io" style="font-size:0.74rem;color:var(--cyan);text-decoration:none;" target="_blank">eyesentrix.io →</a>
-  </footer>
+  </div>
+</section>
 
-  <script>
-    // Subtle neural network canvas (very light, professional)
-    const canvas = document.getElementById('hero-canvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [], width, height;
-    function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
-    window.addEventListener('resize', resize); resize();
-    class Particle {
-      constructor() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * 0.6;
-        this.vy = (Math.random() - 0.5) * 0.6;
-        this.radius = Math.random() * 1.8 + 0.8;
-      }
-      update() {
-        this.x += this.vx; this.y += this.vy;
-        if (this.x < 0 || this.x > width) this.vx *= -1;
-        if (this.y < 0 || this.y > height) this.vy *= -1;
-      }
-      draw() {
-        ctx.fillStyle = '#00d4ff';
-        ctx.globalAlpha = 0.7;
-        ctx.beginPath(); ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2); ctx.fill();
-      }
-    }
-    function initParticles() { particles = []; for (let i = 0; i < 80; i++) particles.push(new Particle()); }
-    function connect() {
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const distance = Math.sqrt(dx*dx + dy*dy);
-          if (distance < 110) {
-            ctx.strokeStyle = `rgba(0, 212, 255, ${0.15 * (1 - distance / 110)})`;
-            ctx.lineWidth = 0.7;
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.stroke();
-          }
-        }
-      }
-    }
-    function animateCanvas() {
-      ctx.clearRect(0, 0, width, height);
-      particles.forEach(p => { p.update(); p.draw(); });
-      connect();
-      requestAnimationFrame(animateCanvas);
-    }
-    initParticles(); animateCanvas();
+<!-- COMPETITIVE -->
+<section class="comp reveal">
+  <div class="section-wrap-sm">
+    <div class="section-label">Competitive Analysis</div>
+    <h2>We Win on Speed, Cost &amp; Simplicity.</h2>
+    <p class="section-lead">Legacy CCTV is passive, expensive, and slow to deploy. Eyesentrix AI flips every assumption.</p>
+    <div class="comp-table">
+      <div class="comp-row header">
+        <div class="comp-cell">Feature</div>
+        <div class="comp-cell">Legacy CCTV</div>
+        <div class="comp-cell">Eyesentrix AI</div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-cell feature">Alert Type</div>
+        <div class="comp-cell legacy">✗ Passive Only</div>
+        <div class="comp-cell eyesentrix">✓ Real-Time AI</div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-cell feature">Hardware</div>
+        <div class="comp-cell legacy">✗ Heavy Install</div>
+        <div class="comp-cell eyesentrix">✓ Existing Cameras</div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-cell feature">Upfront Cost</div>
+        <div class="comp-cell legacy">✗ Expensive Capex</div>
+        <div class="comp-cell eyesentrix">✓ Affordable SaaS</div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-cell feature">Deployment</div>
+        <div class="comp-cell legacy">✗ Multi-Week</div>
+        <div class="comp-cell eyesentrix">✓ Live in Days</div>
+      </div>
+      <div class="comp-row">
+        <div class="comp-cell feature">Language</div>
+        <div class="comp-cell legacy">✗ English Only</div>
+        <div class="comp-cell eyesentrix">✓ Arabic &amp; English</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    // Hamburger & drawer
-    const burger = document.getElementById('burger');
-    const drawer = document.getElementById('drawer');
-    burger.addEventListener('click', () => {
-      burger.classList.toggle('open');
-      drawer.classList.toggle('open');
-    });
-    function closeDrawer() {
-      burger.classList.remove('open');
-      drawer.classList.remove('open');
-    }
+<!-- PRICING -->
+<section class="pricing reveal" id="pricing">
+  <div class="section-wrap">
+    <div class="section-label">Pricing</div>
+    <h2>Affordable, Scalable Pricing</h2>
+    <p class="section-lead">SaaS + Managed Monitoring — deploy one or both. Scale from pilot to enterprise with zero friction and &lt;3 month ROI.</p>
+    <div class="biz-cards">
+      <div class="biz-card">
+        <div class="biz-card-icon">💡</div>
+        <div class="biz-card-title">SaaS Platform</div>
+        <div class="biz-price">QAR 90 <span>/ camera / month</span></div>
+        <ul class="biz-features">
+          <li>AI detection engine</li>
+          <li>Real-time alerts dashboard</li>
+          <li>Analytics &amp; reporting</li>
+          <li>10 cameras = QAR 900/mo</li>
+        </ul>
+      </div>
+      <div class="biz-card">
+        <div class="biz-card-icon">🛡️</div>
+        <div class="biz-card-title">Managed Monitoring</div>
+        <div class="biz-price">QAR 2,000 <span>/ store / month</span></div>
+        <ul class="biz-features">
+          <li>24/7 human verification</li>
+          <li>Remote command center</li>
+          <li>Incident management</li>
+          <li>Dedicated response team</li>
+        </ul>
+      </div>
+      <div class="biz-card highlight">
+        <div class="biz-badge">Best Value</div>
+        <div class="biz-card-icon">🚀</div>
+        <div class="biz-card-title">Combined (10 Cameras)</div>
+        <div class="biz-price">QAR 2,900 <span>/ store / month</span></div>
+        <ul class="biz-features">
+          <li>Full AI + Human coverage</li>
+          <li>High-margin recurring ARR</li>
+          <li>&lt;3 months ROI payback</li>
+          <li>No capital expenditure</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
-    // Nav scroll
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
+<!-- MARKET -->
+<section class="market reveal">
+  <div class="section-wrap">
+    <div class="two-col">
+      <div>
+        <div class="section-label">Market Opportunity</div>
+        <h2>Massive Addressable Market</h2>
+        <p class="section-lead">Starting in Qatar, then scaling across the entire GCC — one of the fastest-growing tech adoption corridors in the world.</p>
+        <p style="color:var(--muted);font-size:0.82rem;line-height:1.75;">
+          <strong style="color:var(--text);">Phase 1 (2026):</strong> Qatar — retail chains, hypermarkets, malls &amp; warehouses.<br><br>
+          <strong style="color:var(--text);">Phase 2 (2027+):</strong> UAE, Saudi Arabia, Kuwait, Bahrain &amp; Oman via channel partners and direct enterprise sales.
+        </p>
+      </div>
+      <div>
+        <div class="market-cards" style="margin-bottom:1rem;">
+          <div class="mcard">
+            <div class="mcard-num">5,000+</div>
+            <div class="mcard-label">Qatar retail &amp; warehouse sites</div>
+          </div>
+          <div class="mcard">
+            <div class="mcard-num">25,000+</div>
+            <div class="mcard-label">GCC potential sites by 2027</div>
+          </div>
+          <div class="mcard">
+            <div class="mcard-num">100M+</div>
+            <div class="mcard-label">Cameras deployed across GCC</div>
+          </div>
+          <div class="mcard">
+            <div class="mcard-num">6</div>
+            <div class="mcard-label">Countries in expansion plan</div>
+          </div>
+        </div>
+        <div class="gcc-visual">
+          <div class="gcc-dots">
+            <div class="gcc-dot"><span>🇶🇦</span>Qatar</div>
+            <div class="gcc-dot"><span>🇦🇪</span>UAE</div>
+            <div class="gcc-dot"><span>🇸🇦</span>KSA</div>
+            <div class="gcc-dot"><span>🇰🇼</span>Kuwait</div>
+            <div class="gcc-dot"><span>🇧🇭</span>Bahrain</div>
+            <div class="gcc-dot"><span>🇴🇲</span>Oman</div>
+          </div>
+          <p style="font-size:0.72rem;color:var(--muted);">Full GCC coverage by 2027+</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    // Count-up
-    function countUp(el) {
-      const target = parseFloat(el.getAttribute('data-count'));
-      let count = 0;
-      const increment = target / 70;
-      const timer = setInterval(() => {
-        count += increment;
-        if (count >= target) { count = target; clearInterval(timer); }
-        el.textContent = target % 1 === 0 ? Math.floor(count) : count.toFixed(0);
-        if (target === 100000000) el.textContent = (count / 1000000).toFixed(0) + 'M+';
-      }, 20);
-    }
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          if (entry.target.id === 'stats') {
-            document.querySelectorAll('.stat-num').forEach(countUp);
-          }
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.3 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    observer.observe(document.getElementById('stats'));
-  </script>
+<!-- FINANCIALS -->
+<section class="fin reveal" id="financials">
+  <div class="section-wrap">
+    <div class="section-label">Financial Projections</div>
+    <h2>Strong Recurring Revenue Growth</h2>
+    <p class="section-lead">Clear path to QAR 13M+ annual run-rate in 3 years with 72% gross margin.</p>
+    <div class="fin-cards">
+      <div class="fin-card">
+        <div class="fin-year">Year 1</div>
+        <div class="fin-stores">75</div>
+        <div class="fin-stores-label">stores</div>
+        <div class="fin-monthly">QAR 218K / month</div>
+        <div class="fin-annual">QAR 2.6M</div>
+        <div class="fin-annual-label">annual revenue</div>
+      </div>
+      <div class="fin-card">
+        <div class="fin-year">Year 2</div>
+        <div class="fin-stores">200</div>
+        <div class="fin-stores-label">stores</div>
+        <div class="fin-monthly">QAR 580K / month</div>
+        <div class="fin-annual">QAR 6.96M</div>
+        <div class="fin-annual-label">annual revenue</div>
+      </div>
+      <div class="fin-card">
+        <div class="fin-year">Year 3</div>
+        <div class="fin-stores">375</div>
+        <div class="fin-stores-label">stores</div>
+        <div class="fin-monthly">QAR 1.09M / month</div>
+        <div class="fin-annual">QAR 13M+</div>
+        <div class="fin-annual-label">annual revenue</div>
+      </div>
+    </div>
+    <div class="fin-highlight">
+      <div class="fin-hl-stat"><div class="num">72%</div><div class="label">Gross Margin</div></div>
+      <div class="fin-hl-stat"><div class="num">&lt;3 mo</div><div class="label">Payback Period</div></div>
+      <div class="fin-hl-stat"><div class="num">ARR</div><div class="label">Recurring Revenue</div></div>
+      <div style="margin-left:auto;font-size:0.8rem;color:var(--muted);max-width:240px;">High-margin SaaS + managed services built for rapid regional expansion.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="roadmap reveal" id="roadmap">
+  <div class="section-wrap-sm">
+    <div class="section-label">Vision &amp; Roadmap</div>
+    <h2>The GCC Leader in AI Video Analytics</h2>
+    <p class="section-lead">Three phases — from real-time monitoring to fully autonomous operational intelligence.</p>
+    <div class="phases">
+      <div class="phase">
+        <div>
+          <div class="phase-tag">Phase 1 — Now</div>
+          <div class="phase-num">01</div>
+        </div>
+        <div>
+          <div class="phase-title">Real-time Monitoring &amp; Control</div>
+          <div class="phase-desc">Production-ready AI detection engine live on CCTV feeds. Sub-5-second alert latency. Unified dashboard across all locations. Actively piloting with retail clients in Qatar — validated ROI and performance benchmarks documented.</div>
+        </div>
+      </div>
+      <div class="phase">
+        <div>
+          <div class="phase-tag">Phase 2 — Next</div>
+          <div class="phase-num">02</div>
+        </div>
+        <div>
+          <div class="phase-title">Operations Copilot</div>
+          <div class="phase-desc">Proactive AI assistant for managers &amp; staff. Natural language chat + voice commands in English &amp; Arabic. Analyzes live feeds and historical data to deliver proactive suggestions — e.g. "Queue length is 12, recommend opening counter 4."</div>
+        </div>
+      </div>
+      <div class="phase">
+        <div>
+          <div class="phase-tag">Phase 3 — Future</div>
+          <div class="phase-num">03</div>
+        </div>
+        <div>
+          <div class="phase-title">Full Agentic AI Layer</div>
+          <div class="phase-desc">Autonomous operational intelligence that not only suggests but executes actions (with human approval). Understands context, routes incidents automatically, closes the loop. From passive monitoring → AI that thinks, recommends, and acts.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team reveal" id="team">
+  <div class="section-wrap-sm">
+    <div class="section-label" style="text-align:center;display:block;">Our Team</div>
+    <h2 style="text-align:center;margin-bottom:2rem;">The People Behind Eyesentrix AI</h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">💼</div>
+        <div class="team-name">Mohiuddin Qazi</div>
+        <div class="team-role">Co-Founder</div>
+        <div class="team-dept">Business &amp; Finance</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">📣</div>
+        <div class="team-name">Mateen Shaikh</div>
+        <div class="team-role">Co-Founder</div>
+        <div class="team-dept">Sales &amp; Marketing</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">⚙️</div>
+        <div class="team-name">Ayesha Qureshi</div>
+        <div class="team-role">Co-Founder</div>
+        <div class="team-dept">Technology, AI &amp; Operations</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta reveal" id="contact">
+  <div class="cta-inner">
+    <div class="cta-glow">
+      <div class="cta-glow-inner">👁️</div>
+    </div>
+    <div class="section-label" style="text-align:center;display:block;">Get In Touch</div>
+    <h2>Ready to See It In Action?</h2>
+    <p>Request a live demo, explore a pilot program, or discuss partnership opportunities with the Eyesentrix team.</p>
+    <div class="cta-contact">
+      <a href="mailto:mohiuddin.qazi@eyesentrix.com" class="btn-primary">📧 Email Us</a>
+      <a href="https://www.eyesentrix.io" target="_blank" rel="noopener" class="btn-secondary">🌐 eyesentrix.io</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="logo.png" alt="Eyesentrix" />
+    <span>eyesentrix</span>
+  </div>
+  <span class="footer-copy">© 2026 Eyesentrix AI · Qatar → GCC</span>
+  <a href="https://www.eyesentrix.io" class="footer-link" target="_blank" rel="noopener">eyesentrix.io →</a>
+</footer>
+
+<script>
+  // Hamburger
+  const burger = document.getElementById('burger');
+  const drawer = document.getElementById('drawer');
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    drawer.classList.toggle('open');
+  });
+  function closeDrawer() {
+    burger.classList.remove('open');
+    drawer.classList.remove('open');
+  }
+  document.addEventListener('click', e => {
+    if (!burger.contains(e.target) && !drawer.contains(e.target)) closeDrawer();
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Nav shrink on scroll
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.padding = window.scrollY > 40 ? '0.6rem 6%' : '0.9rem 6%';
+  });
+</script>
 </body>
 </html>
