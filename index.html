@@ -31,7 +31,7 @@
       line-height: 1.7;
       position: relative;
     }
-    /* Subtle moving grid - very light */
+    /* Very subtle grid background */
     body::before {
       content: '';
       position: fixed;
@@ -42,16 +42,16 @@
       background-size: 90px 90px;
       pointer-events: none;
       z-index: 0;
-      animation: gridShift 60s linear infinite;
-      opacity: 0.3;
+      animation: gridShift 80s linear infinite;
+      opacity: 0.25;
     }
     @keyframes gridShift { 0% { background-position: 0 0; } 100% { background-position: 90px 90px; } }
-    /* Hero neural canvas - much softer */
+    /* Soft hero canvas - very light neural effect */
     #hero-canvas {
       position: absolute;
       inset: 0;
       z-index: 1;
-      opacity: 0.25;
+      opacity: 0.18;
       pointer-events: none;
       mix-blend-mode: screen;
     }
@@ -262,7 +262,7 @@
       margin-bottom: 1.2rem;
     }
     .section-lead { max-width: 580px; color: var(--muted); font-size: 1.05rem; margin-bottom: 2.5rem; }
-    /* Clean loose list for all sections except Key Capabilities */
+    /* Clean loose list – used for EVERY section except Key Capabilities */
     .loose-list {
       list-style: none;
       font-size: 1.05rem;
@@ -283,7 +283,7 @@
       line-height: 1;
     }
     .loose-list strong { color: var(--text); }
-    /* Only Key Capabilities uses clean cards */
+    /* ONLY Key Capabilities uses clean cards */
     .key-capabilities-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -314,7 +314,7 @@
       font-weight: 700;
       margin-bottom: 0.6rem;
     }
-    /* Responsive */
+    /* Perfect mobile + desktop */
     @media (max-width: 900px) {
       .nav-links { display: none; }
       .nav-burger { display: flex; }
@@ -395,7 +395,7 @@
       <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">👥</span> Queue Management</div>
       <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">📦</span> Stock Visibility</div>
       <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">🤖</span> Agentic AI</div>
-      <!-- Duplicate -->
+      <!-- Duplicate for seamless loop -->
       <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">🛒</span> Shoplifting Detection</div>
       <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">⚡</span> Sub-5s Alerts</div>
       <div style="display:flex;align-items:center;gap:0.6rem;white-space:nowrap;font-size:0.92rem;color:var(--muted);font-weight:600;"><span style="font-size:1.2rem;">📊</span> Real-Time Analytics</div>
@@ -602,7 +602,7 @@
   </footer>
 
   <script>
-    // Subtle neural network canvas
+    // Subtle neural network canvas (very light, professional)
     const canvas = document.getElementById('hero-canvas');
     const ctx = canvas.getContext('2d');
     let particles = [], width, height;
@@ -669,7 +669,7 @@
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
 
-    // Count-up animation
+    // Count-up
     function countUp(el) {
       const target = parseFloat(el.getAttribute('data-count'));
       let count = 0;
