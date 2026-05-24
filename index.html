@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Eyesentrix AI — AI-Powered Remote Monitoring & Business Intelligence</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -29,18 +29,20 @@
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: var(--body);
       background: var(--bg);
       color: var(--text);
       overflow-x: hidden;
       line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     /* subtle noise */
     body::before {
       content:''; position:fixed; inset:0;
-      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'%3E%3C/feTurbulence%3E%3CfeDisplacementMap in='SourceGraphic'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
       pointer-events:none; z-index:0; opacity:0.35;
     }
 
@@ -75,7 +77,7 @@
     }
     .nav-logo { display:flex; align-items:center; gap:0.55rem; text-decoration:none; flex-shrink:0; }
     .nav-logo img { width:30px; height:30px; object-fit:contain; }
-    .nav-logo span { font-family:'Syne',sans-serif; font-size:1.05rem; font-weight:700; color:var(--white); letter-spacing:-0.02em; }
+    .nav-logo span { font-family:'Poppins',sans-serif; font-size:1.05rem; font-weight:700; color:var(--white); letter-spacing:-0.02em; }
 
     .nav-links { display:flex; gap:1.6rem; list-style:none; }
     .nav-links a { color:var(--muted); text-decoration:none; font-size:0.82rem; font-weight:500; transition:color 0.2s; white-space:nowrap; }
@@ -163,7 +165,7 @@
     }
 
     h1 {
-      font-family:'Syne',sans-serif;
+      font-family:'Poppins',sans-serif;
       font-size:var(--h1);
       font-weight:800; line-height:1.05; letter-spacing:-0.03em;
       color:var(--white);
@@ -210,7 +212,7 @@
       animation:fadeUp 0.7s 0.45s ease both;
     }
     .stat { text-align:center; }
-    .stat-num { font-family:'Syne',sans-serif; font-size:1.6rem; font-weight:800; color:var(--cyan); line-height:1; }
+    .stat-num { font-family:'Poppins',sans-serif; font-size:1.6rem; font-weight:800; color:var(--cyan); line-height:1; }
     .stat-label { font-size:0.7rem; color:var(--muted); margin-top:0.2rem; text-transform:uppercase; letter-spacing:0.05em; }
 
     /* trust bar */
@@ -242,7 +244,7 @@
     }
 
     h2 {
-      font-family:'Syne',sans-serif;
+      font-family:'Poppins',sans-serif;
       font-size:var(--h2);
       font-weight:800; letter-spacing:-0.025em;
       color:var(--white); line-height:1.1; margin-bottom:0.85rem;
@@ -266,7 +268,7 @@
     .pcard:hover { border-color:rgba(0,212,255,0.3); transform:translateY(-3px); }
     .pcard:last-child { grid-column:1/-1; }
     .pcard-icon { font-size:1.35rem; margin-bottom:0.5rem; }
-    .pcard-title { font-family:'Syne',sans-serif; font-size:0.9rem; font-weight:700; color:var(--white); margin-bottom:0.35rem; }
+    .pcard-title { font-family:'Poppins',sans-serif; font-size:0.9rem; font-weight:700; color:var(--white); margin-bottom:0.35rem; }
     .pcard-text  { font-size:0.8rem; color:var(--muted); line-height:1.55; }
 
     /* ════════════════ HOW IT WORKS ════════════════ */
@@ -282,9 +284,9 @@
     }
     .step:hover { border-color:rgba(0,212,255,0.25); transform:translateY(-4px); }
     .step:hover::before { opacity:1; }
-    .step-num   { font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; color:rgba(0,212,255,0.1); line-height:1; margin-bottom:0.65rem; }
+    .step-num   { font-family:'Poppins',sans-serif; font-size:2rem; font-weight:800; color:rgba(0,212,255,0.1); line-height:1; margin-bottom:0.65rem; }
     .step-icon  { font-size:1.35rem; margin-bottom:0.5rem; }
-    .step-title { font-family:'Syne',sans-serif; font-size:0.88rem; font-weight:700; color:var(--white); margin-bottom:0.35rem; }
+    .step-title { font-family:'Poppins',sans-serif; font-size:0.88rem; font-weight:700; color:var(--white); margin-bottom:0.35rem; }
     .step-desc  { font-size:0.78rem; color:var(--muted); line-height:1.55; }
 
     /* ════════════════ USE CASES ════════════════ */
@@ -303,7 +305,7 @@
     .use-card:hover { border-color:var(--cyan); transform:translateY(-4px); }
     .use-card:hover::after { opacity:1; }
     .use-icon  { font-size:1.6rem; margin-bottom:0.75rem; }
-    .use-title { font-family:'Syne',sans-serif; font-size:0.8rem; font-weight:700; color:var(--white); margin-bottom:0.3rem; }
+    .use-title { font-family:'Poppins',sans-serif; font-size:0.8rem; font-weight:700; color:var(--white); margin-bottom:0.3rem; }
     .use-desc  { font-size:0.72rem; color:var(--muted); line-height:1.5; }
 
     /* ════════════════ COMPETITIVE ════════════════ */
@@ -313,7 +315,7 @@
     .comp-row:last-child { border-bottom:none; }
     .comp-row:not(.header):hover { background:rgba(255,255,255,0.02); }
     .comp-cell { padding:0.85rem 1.25rem; font-size:0.83rem; }
-    .comp-row.header .comp-cell { font-family:'Syne',sans-serif; font-weight:700; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); background:rgba(255,255,255,0.025); }
+    .comp-row.header .comp-cell { font-family:'Poppins',sans-serif; font-weight:700; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); background:rgba(255,255,255,0.02); }
     .comp-cell.feature   { color:var(--text); }
     .comp-cell.legacy    { color:#ff6b6b; display:flex; align-items:center; gap:0.35rem; }
     .comp-cell.eyesentrix{ color:var(--cyan); display:flex; align-items:center; gap:0.35rem; font-weight:600; }
@@ -333,8 +335,8 @@
       background:var(--cyan); color:var(--bg); margin-bottom:1rem;
     }
     .biz-card-icon { font-size:1.4rem; margin-bottom:1rem; }
-    .biz-card-title { font-family:'Syne',sans-serif; font-size:1rem; font-weight:700; color:var(--white); margin-bottom:0.4rem; }
-    .biz-price { font-family:'Syne',sans-serif; font-size:1.5rem; font-weight:800; color:var(--cyan); margin-bottom:0.875rem; line-height:1.15; }
+    .biz-card-title { font-family:'Poppins',sans-serif; font-size:1rem; font-weight:700; color:var(--white); margin-bottom:0.4rem; }
+    .biz-price { font-family:'Poppins',sans-serif; font-size:1.5rem; font-weight:800; color:var(--cyan); margin-bottom:0.875rem; line-height:1.15; }
     .biz-price span { font-size:0.78rem; font-weight:400; color:var(--muted); }
     .biz-features { list-style:none; }
     .biz-features li { font-size:0.8rem; color:var(--muted); padding:0.3rem 0; display:flex; align-items:center; gap:0.45rem; border-bottom:1px solid rgba(255,255,255,0.04); }
@@ -349,7 +351,7 @@
       transition:border-color 0.2s,transform 0.2s;
     }
     .mcard:hover { border-color:rgba(0,212,255,0.3); transform:translateY(-3px); }
-    .mcard-num   { font-family:'Syne',sans-serif; font-size:1.85rem; font-weight:800; color:var(--cyan); line-height:1; margin-bottom:0.2rem; }
+    .mcard-num   { font-family:'Poppins',sans-serif; font-size:1.85rem; font-weight:800; color:var(--cyan); line-height:1; margin-bottom:0.2rem; }
     .mcard-label { font-size:0.77rem; color:var(--muted); }
 
     /* GCC map visual */
@@ -384,17 +386,17 @@
     }
     .fin-card:hover::before { transform:scaleX(1); }
     .fin-year         { font-size:0.68rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); margin-bottom:0.5rem; }
-    .fin-stores       { font-family:'Syne',sans-serif; font-size:2.2rem; font-weight:800; color:var(--white); line-height:1; }
+    .fin-stores       { font-family:'Poppins',sans-serif; font-size:2.2rem; font-weight:800; color:var(--white); line-height:1; }
     .fin-stores-label { font-size:0.75rem; color:var(--muted); margin-bottom:0.75rem; }
     .fin-monthly      { font-size:0.8rem; color:var(--cyan); font-weight:600; margin-bottom:0.3rem; }
-    .fin-annual       { font-family:'Syne',sans-serif; font-size:1.3rem; font-weight:800; color:var(--cyan); }
+    .fin-annual       { font-family:'Poppins',sans-serif; font-size:1.3rem; font-weight:800; color:var(--cyan); }
     .fin-annual-label { font-size:0.68rem; color:var(--muted); }
     .fin-highlight {
       background:rgba(0,212,255,0.04); border:1px solid rgba(0,212,255,0.15);
       border-radius:12px; padding:1.35rem 1.75rem;
       display:flex; gap:2rem; align-items:center; flex-wrap:wrap;
     }
-    .fin-hl-stat .num   { font-family:'Syne',sans-serif; font-size:1.6rem; font-weight:800; color:var(--cyan); }
+    .fin-hl-stat .num   { font-family:'Poppins',sans-serif; font-size:1.6rem; font-weight:800; color:var(--cyan); }
     .fin-hl-stat .label { font-size:0.74rem; color:var(--muted); }
 
     /* ════════════════ ROADMAP ════════════════ */
@@ -407,9 +409,9 @@
     }
     .phase::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:linear-gradient(to bottom,var(--cyan),var(--blue)); opacity:0.5; }
     .phase:hover { border-color:rgba(0,212,255,0.25); }
-    .phase-tag  { font-family:'Syne',sans-serif; font-size:0.72rem; font-weight:700; color:var(--cyan); text-transform:uppercase; letter-spacing:0.06em; }
-    .phase-num  { font-family:'Syne',sans-serif; font-size:2.5rem; font-weight:800; color:rgba(255,255,255,0.04); line-height:1; }
-    .phase-title{ font-family:'Syne',sans-serif; font-size:1rem; font-weight:700; color:var(--white); margin-bottom:0.4rem; }
+    .phase-tag  { font-family:'Poppins',sans-serif; font-size:0.72rem; font-weight:700; color:var(--cyan); text-transform:uppercase; letter-spacing:0.06em; }
+    .phase-num  { font-family:'Poppins',sans-serif; font-size:2.5rem; font-weight:800; color:rgba(255,255,255,0.04); line-height:1; }
+    .phase-title{ font-family:'Poppins',sans-serif; font-size:1rem; font-weight:700; color:var(--white); margin-bottom:0.4rem; }
     .phase-desc { font-size:0.82rem; color:var(--muted); line-height:1.6; }
 
     /* ════════════════ TEAM ════════════════ */
@@ -433,7 +435,7 @@
       display:flex; align-items:center; justify-content:center;
       font-size:1.5rem; margin:0 auto 1rem;
     }
-    .team-name { font-family:'Syne',sans-serif; font-size:1rem; font-weight:700; color:var(--white); margin-bottom:0.2rem; }
+    .team-name { font-family:'Poppins',sans-serif; font-size:1rem; font-weight:700; color:var(--white); margin-bottom:0.2rem; }
     .team-role { font-size:0.68rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--cyan); margin-bottom:0.3rem; }
     .team-dept { font-size:0.8rem; color:var(--muted); }
 
@@ -479,7 +481,7 @@
     }
     .footer-logo { display:flex; align-items:center; gap:0.55rem; }
     .footer-logo img { width:24px; height:24px; object-fit:contain; }
-    .footer-logo span { font-family:'Syne',sans-serif; font-size:0.9rem; font-weight:700; color:var(--text); }
+    .footer-logo span { font-family:'Poppins',sans-serif; font-size:0.9rem; font-weight:700; color:var(--text); }
     .footer-copy { font-size:0.74rem; color:var(--muted); }
     .footer-link { font-size:0.74rem; color:var(--cyan); text-decoration:none; }
     .footer-link:hover { text-decoration:underline; }
@@ -944,7 +946,7 @@
         </div>
         <div>
           <div class="phase-title">Real-time Monitoring &amp; Control</div>
-          <div class="phase-desc">Production-ready AI detection engine live on CCTV feeds. Sub-5-second alert latency. Unified dashboard across all locations. Actively piloting with retail clients in Qatar — validated ROI and performance benchmarks documented.</div>
+          <div class="phase-desc">Production-ready AI detection engine live on CCTV feeds. Sub-5-second alert latency. Unified dashboard across all locations. Actively piloting with retail clients in Qatar.</div>
         </div>
       </div>
       <div class="phase">
@@ -954,7 +956,7 @@
         </div>
         <div>
           <div class="phase-title">Operations Copilot</div>
-          <div class="phase-desc">Proactive AI assistant for managers &amp; staff. Natural language chat + voice commands in English &amp; Arabic. Analyzes live feeds and historical data to deliver proactive suggestions — e.g. "Queue length is 12, recommend opening counter 4."</div>
+          <div class="phase-desc">Proactive AI assistant for managers &amp; staff. Natural language chat + voice commands in English &amp; Arabic. Analyzes live feeds and historical data to deliver predictive insights and recommendations.</div>
         </div>
       </div>
       <div class="phase">
@@ -964,7 +966,7 @@
         </div>
         <div>
           <div class="phase-title">Full Agentic AI Layer</div>
-          <div class="phase-desc">Autonomous operational intelligence that not only suggests but executes actions (with human approval). Understands context, routes incidents automatically, closes the loop. From passive monitoring → AI that thinks, recommends, and acts.</div>
+          <div class="phase-desc">Autonomous operational intelligence that not only suggests but executes actions (with human approval). Understands context, routes incidents automatically, closes the feedback loop.</div>
         </div>
       </div>
     </div>
@@ -999,60 +1001,33 @@
   </div>
 </section>
 
-<!-- CTA -->
-<section class="cta reveal" id="contact">
-  <div class="cta-inner">
-    <div class="cta-glow">
-      <div class="cta-glow-inner">👁️</div>
-    </div>
-    <div class="section-label" style="text-align:center;display:block;">Get In Touch</div>
-    <h2>Ready to See It In Action?</h2>
-    <p>Request a live demo, explore a pilot program, or discuss partnership opportunities with the Eyesentrix team.</p>
-    <div class="cta-contact">
-      <a href="mailto:mohiuddin.qazi@eyesentrix.com" class="btn-primary">📧 Email Us</a>
-      <a href="https://www.eyesentrix.io" target="_blank" rel="noopener" class="btn-secondary">🌐 eyesentrix.io</a>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">
-    <img src="logo.png" alt="Eyesentrix" />
-    <span>eyesentrix</span>
-  </div>
-  <span class="footer-copy">© 2026 Eyesentrix AI · Qatar → GCC</span>
-  <a href="https://www.eyesentrix.io" class="footer-link" target="_blank" rel="noopener">eyesentrix.io →</a>
-</footer>
-
 <script>
-  // Hamburger
+  // Mobile menu toggle
   const burger = document.getElementById('burger');
   const drawer = document.getElementById('drawer');
-  burger.addEventListener('click', () => {
+
+  burger?.addEventListener('click', () => {
     burger.classList.toggle('open');
     drawer.classList.toggle('open');
   });
+
   function closeDrawer() {
     burger.classList.remove('open');
     drawer.classList.remove('open');
   }
-  document.addEventListener('click', e => {
-    if (!burger.contains(e.target) && !drawer.contains(e.target)) closeDrawer();
-  });
 
   // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
   }, { threshold: 0.1 });
-  reveals.forEach(el => observer.observe(el));
 
-  // Nav shrink on scroll
-  const nav = document.querySelector('nav');
-  window.addEventListener('scroll', () => {
-    nav.style.padding = window.scrollY > 40 ? '0.6rem 6%' : '0.9rem 6%';
-  });
+  reveals.forEach(reveal => observer.observe(reveal));
 </script>
+
 </body>
 </html>
